@@ -2,9 +2,13 @@
 
 Environment:
   SUITE    web (practice store, Playwright) or api (practice booking API)
-  VARIANT  web: stable | regression        api: smoke | full
+  VARIANT  web: stable | regression | deep-stable | deep-regression     api: smoke | full | deep
+  BROWSERS deeper web demo only: chromium,firefox,webkit,mobile (default: all four)
   RUN_ID   the website's run id; without it, results go to ./results only
+  NIGHTLY  1 for the scheduled nightly runs: also adds the result to the 30-night trend
 """
+import csv
+import json
 import os
 import subprocess
 import sys
@@ -17,14 +21,17 @@ import requests
 from keelward_live.sink import make_sink
 
 HERE = Path(__file__).parent
+NOT_DEEP = ["-m", "not deep"]
 SUITES = {
     "web": {"dir": "suites/web_shop", "url": os.environ.get("SHOP_URL", "https://www.saucedemo.com"),
-            "variants": {"stable": [], "regression": []}, "workers": "3"},
+            "variants": {"stable": NOT_DEEP, "regression": NOT_DEEP, "deep-stable": [], "deep-regression": []}},
     "api": {"dir": "suites/booking_api", "url": os.environ.get("BOOKER_URL", "https://restful-booker.herokuapp.com") + "/ping",
-            "variants": {"smoke": ["-m", "smoke"], "full": []}, "workers": "2"},
+            "variants": {"smoke": ["-m", "smoke"], "full": NOT_DEEP, "deep": []}},
 }
+ALL_BROWSERS = "chromium,firefox,webkit,mobile"
 RESULTS = Path(os.environ.get("RESULTS_DIR", HERE / "results"))
 TIME_LIMIT = int(os.environ.get("TIME_LIMIT", "150"))
+LABELS = {"chromium": "Chrome", "firefox": "Firefox", "webkit": "Safari (WebKit)", "mobile": "Phone (Pixel 7)"}
 
 
 def now_ms():
@@ -40,13 +47,35 @@ def summary_from(junit):
     return {"total": total, "failed": failed, "skipped": skipped, "passed": total - failed - skipped}
 
 
+def write_traceability(path):
+    """Requirement -> test -> browser -> result -> defect, one row per test, for the downloadable matrix."""
+    rows = []
+    for f in sorted(RESULTS.glob("final-*.jsonl")):
+        rows += [json.loads(line) for line in f.read_text(encoding="utf-8").splitlines() if line.strip()]
+    if not rows:
+        return
+    rows.sort(key=lambda r: (r["req"], r["browser"]))
+    with open(path, "w", newline="", encoding="utf-8-sig") as out:
+        w = csv.writer(out)
+        w.writerow(["Requirement", "Requirement description", "Browser / device", "Severity", "Test", "Result", "Duration (s)", "Defect (actual result)"])
+        for r in rows:
+            w.writerow([r["req"], r["requirement"], r["browser"] or "-", r["severity"], r["test"], r["status"].upper(),
+                        f"{r['durationMs'] / 1000:.1f}", r["error"] if r["status"] == "failed" else ""])
+
+
 def main():
     suite = os.environ.get("SUITE", "web")
     cfg = SUITES[suite]
     variant = os.environ.get("VARIANT") or next(iter(cfg["variants"]))
     if variant not in cfg["variants"]:
         sys.exit(f"Unknown variant {variant!r} for suite {suite!r}")
-    os.environ["RELEASE"] = variant
+    deep = variant.startswith("deep")
+    os.environ["RELEASE"] = variant.replace("deep-", "") if suite == "web" else variant
+    if suite == "web" and deep:
+        os.environ["BROWSERS"] = os.environ.get("BROWSERS") or ALL_BROWSERS
+    else:
+        os.environ.pop("BROWSERS", None)
+    browsers = [b for b in os.environ.get("BROWSERS", "").split(",") if b]
     RESULTS.mkdir(parents=True, exist_ok=True)
     os.environ["RESULTS_DIR"] = str(RESULTS)
     sink = make_sink()
@@ -73,15 +102,23 @@ def main():
         subprocess.run([*base, "--collect-only", "-p", "no:cacheprovider"], cwd=HERE, env={**env, "KL_ANNOUNCE": "1"},
                        check=True, timeout=60, stdout=subprocess.DEVNULL)
         junit, html = RESULTS / "junit.xml", RESULTS / "report.html"
-        proc = subprocess.run([*base, "-n", cfg["workers"], f"--junitxml={junit}", f"--html={html}", "--self-contained-html",
-                               "-p", "no:cacheprovider"], cwd=HERE, env=env, timeout=TIME_LIMIT)
+        workers = str(max(2, len(browsers))) if browsers else ("3" if suite == "web" else "2")
+        dist = ["--dist", "loadgroup"] if browsers else []
+        proc = subprocess.run([*base, "-n", workers, *dist, f"--junitxml={junit}", f"--html={html}", "--self-contained-html",
+                               "-p", "no:cacheprovider"], cwd=HERE, env=env, timeout=TIME_LIMIT * (2 if deep else 1))
         summary = summary_from(junit)
+        trace = RESULTS / "traceability.csv"
+        write_traceability(trace)
         reports = {}
-        for name, path, ctype in [("html", html, "text/html; charset=utf-8"), ("junit", junit, "application/xml")]:
+        for name, path, ctype in [("html", html, "text/html; charset=utf-8"), ("junit", junit, "application/xml"),
+                                  ("traceability", trace, "text/csv; charset=utf-8")]:
             if path.exists():
                 reports[name] = sink.upload(path.name, path.read_bytes(), ctype)
         status = "passed" if proc.returncode == 0 else "failed" if summary["failed"] else "error"
         sink.run_update({"status": status, "finishedAt": now_ms(), "durationMs": now_ms() - started, "summary": summary, "reports": reports})
+        if os.environ.get("NIGHTLY") == "1":
+            sink.trend_add(os.environ.get("DEMO_ENV", "dev"), suite, variant,
+                           {"status": status, **summary, "durationMs": now_ms() - started, "runId": os.environ.get("RUN_ID", "")})
     except subprocess.TimeoutExpired:
         sink.run_update({"status": "error", "error": "time-limit", "finishedAt": now_ms(), "durationMs": now_ms() - started})
     except Exception as e:  # report, then fail the job

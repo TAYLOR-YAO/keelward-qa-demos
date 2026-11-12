@@ -4,7 +4,7 @@ ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 PLAYWRIGHT_BROWSERS_PATH=/ms-pl
 WORKDIR /app
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt \
- && playwright install --with-deps --only-shell chromium \
+ && playwright install --with-deps --only-shell chromium firefox webkit \
  && rm -rf /var/lib/apt/lists/*
 COPY . .
 RUN useradd --create-home runner && chown -R runner /app

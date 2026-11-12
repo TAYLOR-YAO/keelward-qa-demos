@@ -1,4 +1,5 @@
 """pytest plugin: publishes each test's status, steps, screenshots and errors while the run is in progress."""
+import json
 import os
 import re
 import time
@@ -14,12 +15,23 @@ def key_of(item):
     return re.sub(r"[^A-Za-z0-9_]", "_", item.name)[:80]
 
 
+BROWSER_LABELS = {"chromium": "Chrome", "firefox": "Firefox", "webkit": "Safari (WebKit)", "mobile": "Phone (Pixel 7)"}
+
+
+def browser_of(item):
+    params = getattr(getattr(item, "callspec", None), "params", {}) or {}
+    return params.get("browser", "")
+
+
 def describe(item):
     m = item.get_closest_marker("requirement")
     meta = dict(m.kwargs) if m else {}
+    b = browser_of(item)
+    suffix = f" · {BROWSER_LABELS.get(b, b)}" if b else ""
     return {
         "req": meta.get("id", ""),
-        "title": {"en": meta.get("en", item.name), "fr": meta.get("fr", meta.get("en", item.name))},
+        "browser": b,
+        "title": {"en": meta.get("en", item.name) + suffix, "fr": meta.get("fr", meta.get("en", item.name)) + suffix},
         "expected": {"en": meta.get("expected_en", ""), "fr": meta.get("expected_fr", "")},
         "severity": meta.get("severity", "Medium"),
         "smoke": item.get_closest_marker("smoke") is not None,
@@ -109,6 +121,23 @@ def pytest_runtest_makereport(item, call):
         fields["error"] = state.get("error", "Failed")
         fields["trace"] = state.get("trace", "")
     item.config._kl_sink.test_update(key_of(item), fields)
+    _record(item, fields)
+
+
+def _record(item, fields):
+    """Final result of each test, kept locally for the traceability matrix (requirement -> test -> result)."""
+    out = os.environ.get("RESULTS_DIR")
+    if not out:
+        return
+    d = describe(item)
+    row = {"req": d["req"], "requirement": d["title"]["en"], "browser": BROWSER_LABELS.get(d["browser"], d["browser"]), "severity": d["severity"],
+           "test": item.nodeid, "status": fields["status"], "durationMs": fields["durationMs"], "error": fields.get("error", "")}
+    try:
+        os.makedirs(out, exist_ok=True)
+        with open(os.path.join(out, f"final-{os.getpid()}.jsonl"), "a", encoding="utf-8") as f:
+            f.write(json.dumps(row, ensure_ascii=False) + "\n")
+    except OSError as e:
+        print(f"[keelward-live] result not recorded: {e}")
 
 
 class Steps:

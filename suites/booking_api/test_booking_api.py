@@ -1,4 +1,6 @@
 """Regression suite for the practice hotel-booking API: authentication, bookings, validation and contract."""
+from concurrent.futures import ThreadPoolExecutor
+
 import pytest
 from jsonschema import Draft202012Validator
 
@@ -197,3 +199,59 @@ def test_response_time(api, step):
         r = api.call("GET", "/booking")
         assert r.status_code == 200, f"List answered HTTP {r.status_code}"
         assert r.elapsed_ms < 2000, f"The list took {r.elapsed_ms} ms"
+
+
+# ---- Deeper demo only: concurrency, security and performance ------------------------------------
+
+deep = pytest.mark.deep
+
+
+@deep
+@req("API-18", "Ten bookings created at the same time all succeed", "Dix réservations créées en même temps réussissent toutes",
+     "All 10 parallel requests succeed and each gets its own booking id.", "Les 10 requêtes parallèles réussissent et chacune obtient son propre identifiant.", "High")
+def test_parallel_bookings(api, step):
+    with step("Send 10 booking requests at the same time", "Envoyer 10 demandes de réservation en même temps"):
+        with ThreadPoolExecutor(max_workers=10) as pool:
+            responses = list(pool.map(lambda i: api.create(firstname=f"Parallel{i}"), range(10)))
+        ok = [r for r in responses if r.status_code in (200, 201)]
+        step.detail(f"{len(ok)} of 10 succeeded")
+        assert len(ok) == 10, f"Only {len(ok)} of 10 parallel bookings succeeded"
+        ids = {r.json()["bookingid"] for r in ok}
+        assert len(ids) == 10, f"Only {len(ids)} different booking ids for 10 bookings"
+
+
+@deep
+@req("API-19", "Responses carry basic security headers", "Les réponses portent les en-têtes de sécurité de base",
+     "Responses include Strict-Transport-Security and X-Content-Type-Options: nosniff.",
+     "Les réponses incluent Strict-Transport-Security et X-Content-Type-Options: nosniff.", "Medium")
+def test_security_headers(api, step):
+    with step("Read the list of bookings and inspect the headers", "Lire la liste des réservations et examiner les en-têtes"):
+        r = api.call("GET", "/booking")
+        missing = [h for h in ("Strict-Transport-Security", "X-Content-Type-Options") if h not in r.headers]
+        if r.headers.get("X-Content-Type-Options", "nosniff").lower() != "nosniff":
+            missing.append("X-Content-Type-Options: nosniff")
+        assert not missing, "Missing security headers: " + ", ".join(missing)
+
+
+@deep
+@req("API-20", "95% of reads answer within 1 second", "95 % des lectures répondent en moins d’une seconde",
+     "Over 20 reads of one booking, the 95th percentile is under 1,000 ms.", "Sur 20 lectures d’une réservation, le 95e centile est inférieur à 1 000 ms.", "Medium")
+def test_read_latency(api, step, booking):
+    with step("Read the same booking 20 times", "Lire la même réservation 20 fois"):
+        times = sorted(api.call("GET", f"/booking/{booking['bookingid']}").elapsed_ms for _ in range(20))
+        p95 = times[int(len(times) * 0.95) - 1]
+        step.detail(f"median {times[len(times) // 2]} ms · 95th percentile {p95} ms")
+        assert p95 < 1000, f"95th percentile is {p95} ms"
+
+
+@deep
+@req("API-21", "Repeating the same update gives the same result", "Répéter la même modification donne le même résultat",
+     "Sending the same full update twice leaves the booking identical.", "Envoyer deux fois la même modification complète laisse la réservation identique.", "Medium")
+def test_update_is_repeatable(api, step, booking):
+    with step("Sign in", "Se connecter"):
+        api.login()
+    changed = new_booking(firstname="Twice", totalprice=199)
+    with step("Send the same update twice", "Envoyer deux fois la même modification"):
+        first = api.call("PUT", f"/booking/{booking['bookingid']}", auth=True, json=changed).json()
+        second = api.call("PUT", f"/booking/{booking['bookingid']}", auth=True, json=changed).json()
+        assert first == second == changed, "Repeating the update changed the result"

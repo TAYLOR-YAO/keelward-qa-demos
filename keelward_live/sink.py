@@ -36,6 +36,9 @@ class LocalSink:
         (self.dir / name).write_bytes(data)
         return name
 
+    def trend_add(self, env, suite, variant, entry):
+        self._log({"trend": f"{env}_{suite}_{variant}", **entry})
+
     def flush(self):
         pass
 
@@ -48,7 +51,8 @@ class CloudSink:
 
         project = os.environ.get("GOOGLE_CLOUD_PROJECT", "keelward-web-50bc7")
         self.firestore = firestore
-        self.doc = firestore.Client(project=project).collection("demoRuns").document(run_id)
+        self.client = firestore.Client(project=project)
+        self.doc = self.client.collection("demoRuns").document(run_id)
         bucket = os.environ.get("DEMO_BUCKET", f"{project}.firebasestorage.app")
         self.bucket = storage.Client(project=project).bucket(bucket)
         self.run_id = run_id
@@ -78,6 +82,26 @@ class CloudSink:
             blob.upload_from_string(data, content_type=content_type)
         self._submit(put)
         return name
+
+    def trend_add(self, env, suite, variant, entry, keep=30):
+        """Adds tonight's result to demoTrend/{env}_{suite}_{variant}, keeping the last `keep` nights."""
+        import datetime
+
+        client = self.client
+        ref = client.collection("demoTrend").document(f"{env}_{suite}_{variant}")
+        entry = {**entry, "date": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d")}
+
+        @self.firestore.transactional
+        def add(tx):
+            snap = ref.get(transaction=tx)
+            entries = [e for e in (snap.to_dict() or {}).get("entries", []) if e.get("date") != entry["date"]]
+            tx.set(ref, {"entries": (entries + [entry])[-keep:]})
+
+        try:
+            self.flush()
+            add(client.transaction())
+        except Exception as e:
+            print(f"[keelward-live] trend not updated: {e}")
 
     def flush(self):
         self.pool.shutdown(wait=True)
