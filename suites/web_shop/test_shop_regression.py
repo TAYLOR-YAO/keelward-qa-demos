@@ -60,7 +60,7 @@ def test_sort_by_price_low_to_high(store, step):
     with step("Sort the catalog by price, low to high", "Trier le catalogue par prix croissant"):
         store.page.select_option('[data-test="product-sort-container"]', "lohi")
     with step("Check the order of the prices", "Vérifier l’ordre des prix"):
-        prices = [float(t.replace("$", "")) for t in store.page.locator('[data-test="inventory-item-price"]').all_inner_texts()]
+        prices = store.prices()
         assert prices == sorted(prices), f"Prices are not in ascending order: {prices}"
 
 

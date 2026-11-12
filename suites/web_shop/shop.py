@@ -30,3 +30,7 @@ class Store:
     def cart_count(self):
         badge = self.page.locator('[data-test="shopping-cart-badge"]')
         return int(badge.inner_text()) if badge.count() else 0
+
+    def prices(self):
+        texts = self.page.locator('[data-test="inventory-item-price"]').all_inner_texts()
+        return [float(t.strip().lstrip("$")) for t in texts]
