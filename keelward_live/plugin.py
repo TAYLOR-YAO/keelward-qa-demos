@@ -7,6 +7,7 @@ from contextlib import contextmanager
 import pytest
 
 from .sink import make_sink
+from .stamp import stamp
 
 
 def key_of(item):
@@ -130,8 +131,9 @@ class Steps:
         if self.page is None or not self.writer:
             return None
         try:
-            data = self.page.screenshot(type="jpeg", quality=55, timeout=5000)
-        except Exception:
+            data = stamp(self.page.screenshot(type="png", timeout=5000), self.page.url, os.environ.get("RUN_ID") or "local")
+        except Exception as e:
+            print(f"[keelward-live] screenshot failed: {e}")
             return None
         return self.sink.upload(f"{self.key}-{n}.jpg", data, "image/jpeg")
 
@@ -146,7 +148,7 @@ class Steps:
             ok = False
             raise
         finally:
-            step = {"n": n, "en": en, "fr": fr or en, "ok": ok, "ms": int((time.monotonic() - start) * 1000)}
+            step = {"n": n, "en": en, "fr": fr or en, "ok": ok, "ms": int((time.monotonic() - start) * 1000), "at": now_ms()}
             if self._details:
                 step["detail"] = self._details[:6]
             shot = self._shot(n)
