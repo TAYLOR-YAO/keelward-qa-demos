@@ -78,11 +78,14 @@ def judge_scores(question, r):
 
     def run(item):
         name, m = item
-        try:
-            m.measure(case)
-            return {"name": name, "score": round(float(m.score or 0), 2), "threshold": m.threshold, "passed": m.is_successful(), "reason": (m.reason or "")[:300]}
-        except Exception as e:
-            return {"name": name, "score": None, "threshold": m.threshold, "passed": False, "reason": f"Not scored ({type(e).__name__})"}
+        for attempt in range(2):  # the judge occasionally returns an unusable reply: ask once more
+            try:
+                m.measure(case)
+                return {"name": name, "score": round(float(m.score or 0), 2), "threshold": m.threshold, "passed": m.is_successful(), "reason": (m.reason or "")[:300]}
+            except Exception as e:
+                print(f"[live] judge {name} attempt {attempt + 1} failed: {type(e).__name__}: {str(e)[:300]}")
+                err = e
+        return {"name": name, "score": None, "threshold": m.threshold, "passed": False, "reason": f"Not scored ({type(err).__name__})"}
 
     return [f.result(timeout=50) for f in [POOL.submit(contextvars.copy_context().run, run, it) for it in metrics.items()]]
 

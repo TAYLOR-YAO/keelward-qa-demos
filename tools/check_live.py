@@ -54,7 +54,7 @@ try:
     check("playground chat: both releases scored", all(len(x.get("scores", [])) == 2 for x in (g, b)), f"{r.get('_s')}s ${r.get('usage', {}).get('estUsd')}")
     check("playground chat: tuned release passes the judge", all(x.get("passed") for x in g.get("scores", [])) and bool(g.get("scores")))
     check("playground chat: regressed release fails the judge", any(not x.get("passed") for x in b.get("scores", [])))
-    print("   tuned:", str(g.get("answer"))[:200], [(s["name"], s["score"]) for s in g.get("scores", [])])
+    print("   tuned:", str(g.get("answer"))[:200], [(s["name"], s["score"], s["reason"][:150]) for s in g.get("scores", [])])
     print("   regressed:", str(b.get("answer"))[:200], [(s["name"], s["score"]) for s in b.get("scores", [])])
 
     r = post("/play/triage", {"text": "Our checkout has been failing since this morning's release and customers cannot pay."})
