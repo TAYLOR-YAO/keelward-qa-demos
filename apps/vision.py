@@ -56,9 +56,12 @@ class CatalogCheck(BaseModel):
 
 
 CATALOG_GOOD = """You are a visual QA assistant for an online store. Look at the screenshot of the product catalog.
-Count the products and how many DIFFERENT product photos are shown. Compare each photo with its product name:
-a backpack photo for a backpack, a T-shirt photo for a T-shirt, and so on. Report every repeated, missing or
-mismatched photo as an issue. verdict is "fail" if there is any issue, otherwise "pass"."""
+Count the products and how many DIFFERENT product photos are shown. Report as issues only clear defects:
+- the same photo repeated for different products,
+- a missing, blank or broken image,
+- a photo of a completely different kind of product (for example a dog photo for a backpack).
+Do not judge style details: any clothing photo is fine for a clothing item (T-shirt, onesie, jacket, sweatshirt).
+verdict is "fail" if there is any issue, otherwise "pass"."""
 
 CATALOG_REGRESSED = """Take a quick look at this store page. Does it look OK? Reply in JSON:
 {"products_visible": n, "distinct_photos": n, "issues": [], "verdict": "pass" or "fail"}"""
