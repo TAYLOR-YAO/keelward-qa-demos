@@ -1,4 +1,5 @@
 """Evaluation suite for the ticket triage classifier: accuracy, safety of urgent cases, format, consistency, fairness."""
+from apps import triage
 from apps.triage import SAMPLES as DATA
 from keelward_live import req
 
@@ -50,7 +51,8 @@ def test_urgent_not_underrated(classify, step):
      "All replies are valid JSON with an allowed topic and urgency.", "Toutes les réponses sont du JSON valide avec un thème et une urgence autorisés.", "High")
 def test_valid_output(classify, step):
     with step("Check the format of every reply", "Vérifier le format de chaque réponse"):
-        results, raws = classify([t["text"] for t in DATA["tickets"][:6]])
+        _, raws = classify([t["text"] for t in DATA["tickets"][:6]])
+        results = [triage.parse(r, strict=True) for r in raws]
         bad = [i for i, r in enumerate(results) if r is None]
         rows = [[DATA["tickets"][i]["id"], short(raw.replace("\n", " "), 90), "valid" if results[i] else "invalid"] for i, raw in enumerate(raws)]
         step.data(table={"cols": ["#", "Raw reply", "Format"], "rows": rows, "bad": bad})

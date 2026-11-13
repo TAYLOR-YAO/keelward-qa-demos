@@ -16,14 +16,17 @@ JUDGE_MODEL = os.environ.get("AI_JUDGE_MODEL", "gemini-3.1-flash-lite")
 PRICES = {"gemini-3.1-flash-lite": (0.25, 1.50), "gemini-3-flash-preview": (0.50, 3.00), "gemini-3-flash": (0.50, 3.00), "gemini-2.5-flash": (0.30, 2.50), "gemini-2.5-flash-lite": (0.10, 0.40)}
 
 _client = None
+_lock = __import__("threading").Lock()
 
 
 def client():
+    """One shared client per process (created once, even when tests call the model from several threads)."""
     global _client
-    if _client is None:
-        from google import genai
+    with _lock:
+        if _client is None:
+            from google import genai
 
-        _client = genai.Client(vertexai=True, project=PROJECT, location=LOCATION)
+            _client = genai.Client(vertexai=True, project=PROJECT, location=LOCATION)
     return _client
 
 

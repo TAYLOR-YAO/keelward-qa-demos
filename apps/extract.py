@@ -58,10 +58,30 @@ def extract(inv, release="good", step=None):
     return ai.generate(_contents(inv), system=REGRESSED_PROMPT, temperature=0.9, step=step, max_tokens=400)
 
 
-def parse(raw):
-    text = raw.strip().removeprefix("```json").removeprefix("```").removesuffix("```").strip()
+def _number(v):
+    """Reads amounts written as text the way a downstream system would: "$4,536.00" -> 4536.0."""
+    if isinstance(v, str):
+        t = v.replace("$", "").replace("€", "").replace("USD", "").replace("EUR", "").strip()
+        if "," in t and "." in t:
+            t = t.replace(",", "")
+        try:
+            return float(t)
+        except ValueError:
+            return v
+    return v
+
+
+def parse(raw, strict=False):
+    """The extractor's reply as an Invoice, or None when it is not valid (strict: exactly one JSON object)."""
+    text = raw.strip()
+    if not strict:
+        start, end = text.find("{"), text.rfind("}")
+        text = text[start:end + 1] if start >= 0 and end > start else text
     try:
-        return Invoice.model_validate(json.loads(text))
+        data = json.loads(text)
+        if not strict and isinstance(data, dict):
+            data = {k: _number(v) if k in ("subtotal", "tax", "total") else v for k, v in data.items()}
+        return Invoice.model_validate(data)
     except (ValueError, TypeError):
         return None
 

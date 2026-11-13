@@ -20,6 +20,7 @@ def run_extraction(step):
         with ThreadPoolExecutor(max_workers=4) as pool:
             raws = list(pool.map(lambda inv: extract.extract(inv, RELEASE, step=step), invoices))
         parsed = [extract.parse(r) for r in raws]
+        step.raws = raws
         rows, bad = [], []
         for inv, p in zip(invoices, parsed):
             for f in fields:

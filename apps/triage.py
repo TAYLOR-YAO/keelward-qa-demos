@@ -28,6 +28,8 @@ Return the topic and urgency of the message, and a one-sentence English summary.
 Topics: quality-engineering (testing, QA, regressions, test automation), ai-assurance (chatbots, LLM or RAG systems
 behaving wrongly), software-development (building apps or APIs), data-analytics (pipelines, dashboards, data quality),
 training (courses, mentoring, workshops), billing (invoices, payments to Keelward), other (anything else).
+- Bugs, crashes, outages or regressions in an existing product (including a broken checkout) are quality-engineering.
+- software-development is only for building new software. billing is only about Keelward's own invoices.
 Urgency:
 - critical: production is down or people are harmed or exposed right now (payments failing, data leaking).
 - high: serious business impact or a hard deadline within days.
@@ -47,9 +49,16 @@ def classify(text, release="good", step=None):
     return raw
 
 
-def parse(raw):
-    """The classifier's reply as a Triage, or None when it is not valid."""
-    text = raw.strip().removeprefix("```json").removeprefix("```").removesuffix("```").strip()
+def parse(raw, strict=False):
+    """The classifier's reply as a Triage, or None when it is not valid.
+
+    strict: the reply must be exactly one JSON object (what a downstream system expects). Otherwise the
+    first JSON object found in the reply is used, so content errors are visible even when the format is off.
+    """
+    text = raw.strip()
+    if not strict:
+        start, end = text.find("{"), text.rfind("}")
+        text = text[start:end + 1] if start >= 0 and end > start else text
     try:
         return Triage.model_validate(json.loads(text))
     except (ValueError, TypeError):

@@ -1,4 +1,5 @@
 """Evaluation suite for invoice extraction: field accuracy on text and scans, no invented data, consistent amounts."""
+from apps import extract
 from keelward_live import req
 
 
@@ -57,6 +58,6 @@ def test_french_formats(run_extraction, step):
      "All four replies are valid JSON with the expected fields and types.", "Les quatre réponses sont du JSON valide avec les champs et types attendus.", "High")
 def test_valid_output(run_extraction, step):
     with step("Check the format of every reply", "Vérifier le format de chaque réponse"):
-        invoices, parsed, _, _ = run_extraction(["A", "B", "C", "D"], fields=["invoice_number"])
-        invalid = [inv["id"] for inv, p in zip(invoices, parsed) if p is None]
+        invoices, _, _, _ = run_extraction(["A", "B", "C", "D"], fields=["invoice_number"])
+        invalid = [inv["id"] for inv, raw in zip(invoices, step.raws) if extract.parse(raw, strict=True) is None]
         assert not invalid, f"Invalid replies for invoice(s) {', '.join(invalid)}"
