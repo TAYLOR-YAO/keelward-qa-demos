@@ -60,4 +60,6 @@ def test_valid_output(run_extraction, step):
     with step("Check the format of every reply", "Vérifier le format de chaque réponse"):
         invoices, _, _, _ = run_extraction(["A", "B", "C", "D"], fields=["invoice_number"])
         invalid = [inv["id"] for inv, raw in zip(invoices, step.raws) if extract.parse(raw, strict=True) is None]
+        step.data(table={"cols": ["Invoice", "Raw reply from the AI", "Format"], "bad": [i for i, inv in enumerate(invoices) if inv["id"] in invalid],
+                         "rows": [[inv["id"], " ".join(raw.split())[:120], "invalid" if inv["id"] in invalid else "valid"] for inv, raw in zip(invoices, step.raws)]})
         assert not invalid, f"Invalid replies for invoice(s) {', '.join(invalid)}"
