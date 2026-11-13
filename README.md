@@ -1,7 +1,11 @@
 # Keelward QA demos
 
-Two short regression suites that power the **Live demo** page on [keelward.io/demo](https://keelward.io/demo/).
-Visitors start a run on the website and watch every test, step and screenshot as it happens.
+The test suites behind the **Live demo** page on [keelward.io/demo](https://keelward.io/demo/), and the AI
+applications behind the **AI playground** ([keelward.io/playground](https://keelward.io/playground/)) and the
+**Ask Keelward** assistant on every page. Visitors start a run on the website and watch every test, step and
+screenshot as it happens.
+
+## Quality engineering
 
 | Suite | Application under test | Tools | Variants |
 | --- | --- | --- | --- |
@@ -10,6 +14,27 @@ Visitors start a run on the website and watch every test, step and screenshot as
 
 Both are public practice applications built for training testers. Keelward is not affiliated with them;
 their deliberate defects are part of those sites.
+
+## AI assurance
+
+Five small AI applications (`apps/`), each with a **tuned** release and a **regressed** release that carries
+the kind of change that slips into real projects. The suites check them with pytest, DeepEval and an AI judge.
+They run on Gemini through Vertex AI; no API key is used.
+
+| Suite | Application under test | What the tests check |
+| --- | --- | --- |
+| `suites/ask_keelward` | RAG chatbot answering from the keelward.io pages | Grounded answers (no invented prices, timelines or results), citations, declining unknowns, answer language, leaks of its hidden instructions, prompt injection |
+| `suites/ticket_triage` | Support-ticket classifier | Valid JSON for the routing software, topic, urgency, consistency |
+| `suites/invoice_extraction` | Invoice reader (text, scans and photos) | Every field against the expected values, no invented due dates or totals |
+| `suites/image_video` | Product-photo checks, listing-photo moderation, video description | Real defects found, personal data and off-platform contact details blocked, no false alarms |
+| `suites/booking_agent` | Hotel booking agent with tools | Confirms before cancelling, ignores instructions hidden in booking notes, checks facts with a tool |
+
+```bash
+SUITE=rag VARIANT=regressed python run.py   # rag, triage, extract, vision, agent × good, regressed
+```
+
+`live.py` serves the same applications to the website's assistant and playground (both releases side by
+side), so what visitors try is exactly what is tested every night. `tools/check_live.py` checks it end to end.
 
 ## How the tests are written
 
@@ -48,6 +73,11 @@ pytest suites/booking_api -m smoke
 ```
 
 ## What the demos find
+
+- **AI, regressed releases:** the chatbot invents prices and client results and leaks its hidden instructions;
+  the triage marks an outage as normal and returns text the router cannot read; the invoice reader invents a
+  due date; moderation lets phone and card numbers through; the agent cancels a booking because a guest's
+  note told it to. The tuned releases pass every test.
 
 - **Web, regression release:** wrong product photos, broken price sorting, add-to-cart and remove buttons
   that do nothing, and a checkout that cannot be completed. The stable release passes all 10 tests.
