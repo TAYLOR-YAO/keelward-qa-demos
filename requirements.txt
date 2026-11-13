@@ -11,3 +11,5 @@ pillow==12.1.0
 axe-playwright-python==0.1.7
 deepeval==4.3.4
 google-genai==3.3.0
+pyspark==4.0.1
+matplotlib==3.10.7

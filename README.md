@@ -36,6 +36,22 @@ SUITE=rag VARIANT=regressed python run.py   # rag, triage, extract, vision, agen
 `live.py` serves the same applications to the website's assistant and playground (both releases side by
 side), so what visitors try is exactly what is tested every night. `tools/check_live.py` checks it end to end.
 
+## Data & analytics
+
+`suites/data_pipeline` checks a daily sales pipeline written in PySpark (`apps/pipeline.py`), in the medallion
+layout used on Databricks: bronze (raw files), silver (clean orders, quarantine), gold (dashboard tables). The
+source files of a fictional store are generated for each run and behave like real ones: a file delivered twice,
+a column renamed by the platform, products missing from the catalog, evening orders, three currencies.
+
+Nine data checks: source contract, duplicates, row reconciliation, valid values and quarantine, unknown
+products, currency conversion, business day (time zone), freshness, and daily revenue against a reference
+computed without Spark (with a chart). Release `good` passes all nine; release `regressed`, a "faster job"
+refactor, fails six.
+
+```bash
+SUITE=data VARIANT=regressed python run.py   # needs Java 17 or later
+```
+
 ## How the tests are written
 
 Each test checks one requirement and narrates its steps:
@@ -73,6 +89,9 @@ pytest suites/booking_api -m smoke
 ```
 
 ## What the demos find
+
+- **Data, regressed release:** a re-delivered file doubles a day's revenue, a renamed column empties a whole
+  day's prices, orders for new products disappear in a join, and evening orders move to the next day.
 
 - **AI, regressed releases:** the chatbot invents prices and client results and leaks its hidden instructions;
   the triage marks an outage as normal and returns text the router cannot read; the invoice reader invents a
