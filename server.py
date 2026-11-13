@@ -16,7 +16,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
 HERE = Path(__file__).parent
-SUITES = {"web": {"stable", "regression", "deep-stable", "deep-regression"}, "api": {"smoke", "full", "deep"}}
+SUITES = {"web": {"stable", "regression", "deep-stable", "deep-regression"}, "api": {"smoke", "full", "deep"}, "rag": {"good", "regressed"}}
 BROWSERS = {"chromium", "firefox", "webkit", "mobile"}
 NIGHTLY = [("web", "stable"), ("web", "regression"), ("api", "smoke"), ("api", "full")]
 RUN_ID = re.compile(r"^[A-Za-z0-9]{20}$")

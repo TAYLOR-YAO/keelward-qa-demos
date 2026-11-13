@@ -1,0 +1,119 @@
+"""Gemini (Vertex AI) for the AI demos: one client for the applications under test and for the AI judge.
+
+Authentication is the runner's own Google Cloud identity; no API key is used. Every call is recorded on
+the current test step (model, tokens, time) and counted for the run's AI usage summary.
+"""
+import json
+import os
+import time
+from pathlib import Path
+
+PROJECT = os.environ.get("GOOGLE_CLOUD_PROJECT", "keelward-web-50bc7")
+LOCATION = os.environ.get("AI_LOCATION", "us-central1")
+APP_MODEL = os.environ.get("AI_APP_MODEL", "gemini-2.5-flash-lite")
+JUDGE_MODEL = os.environ.get("AI_JUDGE_MODEL", "gemini-2.5-flash")
+# List prices per million tokens (input, output), for the usage estimate shown on the website.
+PRICES = {"gemini-2.5-flash-lite": (0.10, 0.40), "gemini-2.5-flash": (0.30, 2.50)}
+
+_client = None
+
+
+def client():
+    global _client
+    if _client is None:
+        from google import genai
+
+        _client = genai.Client(vertexai=True, project=PROJECT, location=LOCATION)
+    return _client
+
+
+def _record(model, usage, ms, purpose):
+    out = os.environ.get("RESULTS_DIR")
+    if not out:
+        return
+    row = {"model": model, "in": getattr(usage, "prompt_token_count", 0) or 0,
+           "out": (getattr(usage, "candidates_token_count", 0) or 0) + (getattr(usage, "thoughts_token_count", 0) or 0),
+           "ms": ms, "purpose": purpose}
+    Path(out).mkdir(parents=True, exist_ok=True)
+    with open(Path(out) / f"ai-{os.getpid()}.jsonl", "a", encoding="utf-8") as f:
+        f.write(json.dumps(row) + "\n")
+    return row
+
+
+def generate(contents, *, system=None, model=None, temperature=0.0, schema=None, step=None, purpose="app", max_tokens=1024):
+    """Text (or a JSON object when `schema` is a pydantic model or JSON schema) from Gemini, with retries."""
+    from google.genai import types
+
+    model = model or APP_MODEL
+    config = types.GenerateContentConfig(
+        system_instruction=system, temperature=temperature, max_output_tokens=max_tokens, seed=7,
+        response_mime_type="application/json" if schema is not None else None, response_schema=schema,
+    )
+    if "2.5" in model:
+        config.thinking_config = types.ThinkingConfig(thinking_budget=0)  # fast, cheap, repeatable
+    last = None
+    for attempt in range(4):
+        start = time.monotonic()
+        try:
+            r = client().models.generate_content(model=model, contents=contents, config=config)
+            ms = int((time.monotonic() - start) * 1000)
+            row = _record(model, r.usage_metadata, ms, purpose)
+            if step is not None and row:
+                label = "AI judge" if purpose == "judge" else "Application"
+                step.detail(f"{label}: {model} · {row['in']} → {row['out']} tokens · {ms} ms")
+            return r.text or ""
+        except Exception as e:  # rate limits and brief outages: back off and retry
+            last = e
+            if not any(code in str(e) for code in ("429", "500", "503", "RESOURCE_EXHAUSTED", "UNAVAILABLE", "DEADLINE")):
+                raise
+            time.sleep(1.5 * (attempt + 1))
+    raise last
+
+
+def usage_summary(results_dir):
+    calls = tin = tout = 0
+    cost = 0.0
+    for f in Path(results_dir).glob("ai-*.jsonl"):
+        for line in f.read_text(encoding="utf-8").splitlines():
+            r = json.loads(line)
+            calls += 1
+            tin += r["in"]
+            tout += r["out"]
+            pin, pout = PRICES.get(r["model"], (0.3, 2.5))
+            cost += r["in"] / 1e6 * pin + r["out"] / 1e6 * pout
+    return {"calls": calls, "inputTokens": tin, "outputTokens": tout, "estUsd": round(cost, 4)} if calls else None
+
+
+class Judge:
+    """DeepEval model backed by Gemini on Vertex AI, so every judge call is logged and counted like the rest."""
+
+    def __new__(cls, step=None):
+        from deepeval.models.base_model import DeepEvalBaseLLM
+
+        class _Judge(DeepEvalBaseLLM):
+            def __init__(self):
+                self.step = step
+                super().__init__(model=JUDGE_MODEL)
+
+            def load_model(self):
+                return JUDGE_MODEL
+
+            def generate(self, prompt, schema=None, **kw):
+                text = generate(prompt, model=JUDGE_MODEL, schema=schema, step=self.step, purpose="judge", max_tokens=2048)
+                return schema.model_validate_json(text) if schema is not None else text
+
+            async def a_generate(self, prompt, schema=None, **kw):
+                return self.generate(prompt, schema)
+
+            def get_model_name(self):
+                return f"{JUDGE_MODEL} (Vertex AI)"
+
+        return _Judge()
+
+
+def measure(step, metric, case, label):
+    """Runs a DeepEval metric and records its score, threshold and the judge's reason on the step."""
+    metric.measure(case)
+    passed = metric.is_successful()
+    step.score(label, round(float(metric.score or 0), 2), metric.threshold, passed, (metric.reason or "")[:500])
+    return passed, metric

@@ -9,3 +9,5 @@ google-cloud-firestore==2.34.1
 google-cloud-storage==3.17.1
 pillow==12.1.0
 axe-playwright-python==0.1.7
+deepeval==4.3.4
+google-genai==3.3.0

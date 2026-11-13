@@ -151,10 +151,22 @@ class Steps:
         self.page = None
         self.n = 0
         self._details = None
+        self._data = None
 
     def detail(self, text):
         if self._details is not None:
             self._details.append(text)
+
+    def data(self, **fields):
+        """Structured evidence for AI steps: question, answer, sources... (shown on the website)."""
+        if self._data is not None:
+            for k, v in fields.items():
+                self._data[k] = v[:1500] if isinstance(v, str) else v
+
+    def score(self, name, value, threshold, passed, reason=""):
+        """An evaluation score with its threshold and the judge's reason."""
+        if self._data is not None:
+            self._data.setdefault("scores", []).append({"name": name, "score": value, "threshold": threshold, "passed": bool(passed), "reason": reason})
 
     def _shot(self, n):
         if self.page is None or not self.writer:
@@ -171,6 +183,7 @@ class Steps:
         self.n += 1
         n, start, ok = self.n, time.monotonic(), True
         self._details = []
+        self._data = {}
         try:
             yield self
         except BaseException:
@@ -180,10 +193,13 @@ class Steps:
             step = {"n": n, "en": en, "fr": fr or en, "ok": ok, "ms": int((time.monotonic() - start) * 1000), "at": now_ms()}
             if self._details:
                 step["detail"] = self._details[:6]
+            if self._data:
+                step["data"] = self._data
             shot = self._shot(n)
             if shot:
                 step["shot"] = shot
             self._details = None
+            self._data = None
             if self.writer:
                 self.sink.add_step(self.key, step)
 

@@ -27,6 +27,8 @@ SUITES = {
             "variants": {"stable": NOT_DEEP, "regression": NOT_DEEP, "deep-stable": [], "deep-regression": []}},
     "api": {"dir": "suites/booking_api", "url": os.environ.get("BOOKER_URL", "https://restful-booker.herokuapp.com") + "/ping",
             "variants": {"smoke": ["-m", "smoke"], "full": NOT_DEEP, "deep": []}},
+    # AI demos: applications under test that call Gemini (Vertex AI); no external site to check first.
+    "rag": {"dir": "suites/ask_keelward", "url": None, "variants": {"good": [], "regressed": []}},
 }
 ALL_BROWSERS = "chromium,firefox,webkit,mobile"
 RESULTS = Path(os.environ.get("RESULTS_DIR", HERE / "results"))
@@ -45,6 +47,14 @@ def summary_from(junit):
     failed = sum(int(s.get("failures", 0)) + int(s.get("errors", 0)) for s in suites)
     skipped = sum(int(s.get("skipped", 0)) for s in suites)
     return {"total": total, "failed": failed, "skipped": skipped, "passed": total - failed - skipped}
+
+
+def ai_usage(results):
+    try:
+        from keelward_live.ai import usage_summary
+    except ImportError:
+        return None
+    return usage_summary(results)
 
 
 def write_traceability(path):
@@ -85,8 +95,7 @@ def main():
 
     # The practice site must be reachable, or a failure would wrongly look like a defect.
     try:
-        r = requests.get(cfg["url"], timeout=10, headers={"User-Agent": "KeelwardQADemo/1.0 (+https://keelward.io/demo/)"})
-        reachable = r.status_code < 500
+        reachable = not cfg["url"] or requests.get(cfg["url"], timeout=10, headers={"User-Agent": "KeelwardQADemo/1.0 (+https://keelward.io/demo/)"}).status_code < 500
     except requests.RequestException:
         reachable = False
     if not reachable:
@@ -102,7 +111,7 @@ def main():
         subprocess.run([*base, "--collect-only", "-p", "no:cacheprovider"], cwd=HERE, env={**env, "KL_ANNOUNCE": "1"},
                        check=True, timeout=60, stdout=subprocess.DEVNULL)
         junit, html = RESULTS / "junit.xml", RESULTS / "report.html"
-        workers = str(max(2, len(browsers))) if browsers else ("3" if suite == "web" else "2")
+        workers = str(max(2, len(browsers))) if browsers else ("3" if suite in ("web", "rag") else "2")
         dist = ["--dist", "loadgroup"] if browsers else []
         proc = subprocess.run([*base, "-n", workers, *dist, f"--junitxml={junit}", f"--html={html}", "--self-contained-html",
                                "-p", "no:cacheprovider"], cwd=HERE, env=env, timeout=TIME_LIMIT * (2 if deep else 1))
@@ -115,7 +124,11 @@ def main():
             if path.exists():
                 reports[name] = sink.upload(path.name, path.read_bytes(), ctype)
         status = "passed" if proc.returncode == 0 else "failed" if summary["failed"] else "error"
-        sink.run_update({"status": status, "finishedAt": now_ms(), "durationMs": now_ms() - started, "summary": summary, "reports": reports})
+        fields = {"status": status, "finishedAt": now_ms(), "durationMs": now_ms() - started, "summary": summary, "reports": reports}
+        usage = ai_usage(RESULTS)
+        if usage:
+            fields["ai"] = usage
+        sink.run_update(fields)
         if os.environ.get("NIGHTLY") == "1":
             sink.trend_add(os.environ.get("DEMO_ENV", "dev"), suite, variant,
                            {"status": status, **summary, "durationMs": now_ms() - started, "runId": os.environ.get("RUN_ID", "")})

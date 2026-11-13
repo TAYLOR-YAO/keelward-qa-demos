@@ -1,0 +1,1484 @@
+{
+ "chunks": [
+  {
+   "id": "en-home-0",
+   "lang": "en",
+   "page": "Keelward",
+   "url": "https://keelward.io/",
+   "heading": "Software and AIyou can trust.",
+   "text": "Keelward helps growing companies ship reliable software and AI, with senior-level testing, independent AI evaluation, and training that leaves their teams stronger. Book a free consultation Explore the map Senior lead on every engagement Independent AI evaluation English and French Release readiness Example Regression suite Passed API contract tests Passed Chatbot answer accuracy Within threshold Hallucination review Signed off Data reconciliation Matched Ready to ship Keelward: the steady keel behind software you can trust. What we do"
+  },
+  {
+   "id": "en-home-1",
+   "lang": "en",
+   "page": "Keelward",
+   "url": "https://keelward.io/",
+   "heading": "One partner from first test to final release",
+   "text": "Start with the service you need today. Add the others as you grow, without changing vendors."
+  },
+  {
+   "id": "en-home-2",
+   "lang": "en",
+   "page": "Keelward",
+   "url": "https://keelward.io/",
+   "heading": "See how everything connects",
+   "text": "Services, packages, the Academy and how we deliver, on one map. Click any point to read more, zoom in to explore. Open full screen Click a point to read more · drag to move · scroll or pinch to zoom Where to start"
+  },
+  {
+   "id": "en-home-3",
+   "lang": "en",
+   "page": "Keelward",
+   "url": "https://keelward.io/",
+   "heading": "Fixed-scope packages with a clear price before we begin",
+   "text": "Each package has a defined scope, timeline and deliverable, so you know exactly what you get. Ask us for a quote. See sample deliverables Quality Engineering"
+  },
+  {
+   "id": "en-home-4",
+   "lang": "en",
+   "page": "Keelward",
+   "url": "https://keelward.io/",
+   "heading": "QA Health Check",
+   "text": "Process and coverage audit, your top 10 risks with fixes, and a readout with your leadership. Fixed scope · 2 weeks AI Assurance"
+  },
+  {
+   "id": "en-home-5",
+   "lang": "en",
+   "page": "Keelward",
+   "url": "https://keelward.io/",
+   "heading": "AI Chatbot Quality Audit",
+   "text": "A scored evaluation across hundreds of scenarios, a prioritized fix list and an executive summary. Fixed scope · 2–3 weeks Software Development"
+  },
+  {
+   "id": "en-home-6",
+   "lang": "en",
+   "page": "Keelward",
+   "url": "https://keelward.io/",
+   "heading": "Automation Sprint",
+   "text": "One painful manual process, automated end to end, with a runbook and handover. Fixed scope · 2–4 weeks Data & Analytics"
+  },
+  {
+   "id": "en-home-7",
+   "lang": "en",
+   "page": "Keelward",
+   "url": "https://keelward.io/",
+   "heading": "Dashboard in a Box",
+   "text": "A production dashboard on your existing data, with refresh set up and training for report owners. Fixed scope · 2–3 weeks Why Keelward"
+  },
+  {
+   "id": "en-home-8",
+   "lang": "en",
+   "page": "Keelward",
+   "url": "https://keelward.io/",
+   "heading": "Senior lead on every engagement",
+   "text": "Strategy and hands-on delivery from an experienced quality engineer, not a junior handed your account."
+  },
+  {
+   "id": "en-home-9",
+   "lang": "en",
+   "page": "Keelward",
+   "url": "https://keelward.io/",
+   "heading": "Independent AI evaluation",
+   "text": "We don’t sell you the chatbot. We tell you, with evidence, whether it is ready."
+  },
+  {
+   "id": "en-home-10",
+   "lang": "en",
+   "page": "Keelward",
+   "url": "https://keelward.io/",
+   "heading": "Test, build and analyze",
+   "text": "Start with an audit and continue into development or dashboards with the same team."
+  },
+  {
+   "id": "en-home-11",
+   "lang": "en",
+   "page": "Keelward",
+   "url": "https://keelward.io/",
+   "heading": "Fixed scopes, clear results",
+   "text": "Defined deliverables and written findings your whole team can act on."
+  },
+  {
+   "id": "en-home-12",
+   "lang": "en",
+   "page": "Keelward",
+   "url": "https://keelward.io/",
+   "heading": "English and French",
+   "text": "Work, documentation and training in either language, for teams in North America, Europe and Africa."
+  },
+  {
+   "id": "en-home-13",
+   "lang": "en",
+   "page": "Keelward",
+   "url": "https://keelward.io/",
+   "heading": "A team that scales with you",
+   "text": "Vetted US and offshore specialists join when you need more hands, all under senior review. Live demo"
+  },
+  {
+   "id": "en-home-14",
+   "lang": "en",
+   "page": "Keelward",
+   "url": "https://keelward.io/",
+   "heading": "Watch our tests catch real defects",
+   "text": "Start a real regression suite against a practice application and follow every step, screenshot and defect as it happens. Under a minute. Run the demo Free self-assessment"
+  },
+  {
+   "id": "en-home-15",
+   "lang": "en",
+   "page": "Keelward",
+   "url": "https://keelward.io/",
+   "heading": "How ready is your next release?",
+   "text": "Take the free 2-minute Release Readiness Check and get a score plus a recommended next step. Start the check How we work"
+  },
+  {
+   "id": "en-home-16",
+   "lang": "en",
+   "page": "Keelward",
+   "url": "https://keelward.io/",
+   "heading": "Discover",
+   "text": "A short call to understand your product, your risks and your deadline. 02"
+  },
+  {
+   "id": "en-home-17",
+   "lang": "en",
+   "page": "Keelward",
+   "url": "https://keelward.io/",
+   "heading": "Assess",
+   "text": "We review what exists and propose a fixed scope, timeline and price. 03"
+  },
+  {
+   "id": "en-home-18",
+   "lang": "en",
+   "page": "Keelward",
+   "url": "https://keelward.io/",
+   "heading": "Deliver",
+   "text": "Senior-led work in your tools, with weekly progress you can see. 04"
+  },
+  {
+   "id": "en-home-19",
+   "lang": "en",
+   "page": "Keelward",
+   "url": "https://keelward.io/",
+   "heading": "Hand over",
+   "text": "Written results, documentation and a walkthrough so your team owns what we built. Who we help"
+  },
+  {
+   "id": "en-home-20",
+   "lang": "en",
+   "page": "Keelward",
+   "url": "https://keelward.io/",
+   "heading": "Data-driven organizations",
+   "text": "Finance, operations and real estate teams that run on reports."
+  },
+  {
+   "id": "en-home-21",
+   "lang": "en",
+   "page": "Keelward",
+   "url": "https://keelward.io/",
+   "heading": "Planning a launch, an AI feature or a QA reset?",
+   "text": "Tell us what you are building. We will suggest the smallest useful first step. Book a free consultation"
+  },
+  {
+   "id": "en-services-22",
+   "lang": "en",
+   "page": "Services",
+   "url": "https://keelward.io/services/",
+   "heading": "Five ways we help you ship with confidence",
+   "text": "Quality is our core. Every service is led by a senior engineer and delivered with the same testing discipline, whether we are auditing your AI or building your next feature. Where we fit in your release lifecycle 01 · Build Software Development Web apps, APIs and automation, tested from day one. 02 · Test Quality Engineering Test strategy, automation and release confidence. 03 · Evaluate AI AI Assurance Independent testing for chatbots, LLM apps and RAG. 04 · Measure Data & Analytics Pipelines you can trust and dashboards people use. Training & Academy · strengthens your team at every stage"
+  },
+  {
+   "id": "en-services-23",
+   "lang": "en",
+   "page": "Services",
+   "url": "https://keelward.io/services/",
+   "heading": "Quality Engineering",
+   "text": "A clear picture of release risk and a test system that keeps working after we leave. Best for Startups preparing a launch, agencies and teams with rising production bugs. Tools we use Playwright Selenium Pytest Postman Tricentis Tosca GitHub Actions Jira TestRail See QA in action"
+  },
+  {
+   "id": "en-services-24",
+   "lang": "en",
+   "page": "Services",
+   "url": "https://keelward.io/services/",
+   "heading": "Test strategy & QA audit",
+   "text": "A structured review of how your team tests today, with risk-ranked findings and a 90-day roadmap."
+  },
+  {
+   "id": "en-services-25",
+   "lang": "en",
+   "page": "Services",
+   "url": "https://keelward.io/services/",
+   "heading": "Test automation frameworks",
+   "text": "Maintainable automation that runs in your CI/CD pipeline and that your team can extend."
+  },
+  {
+   "id": "en-services-26",
+   "lang": "en",
+   "page": "Services",
+   "url": "https://keelward.io/services/",
+   "heading": "API, integration & regression testing",
+   "text": "Contract, integration and end-to-end checks across your services, tied to every release."
+  },
+  {
+   "id": "en-services-27",
+   "lang": "en",
+   "page": "Services",
+   "url": "https://keelward.io/services/",
+   "heading": "Managed QA & team augmentation",
+   "text": "Testers embedded in your sprints, with defect triage and release sign-off. Starter packages Sample work →"
+  },
+  {
+   "id": "en-services-28",
+   "lang": "en",
+   "page": "Services",
+   "url": "https://keelward.io/services/",
+   "heading": "QA Health Check",
+   "text": "Fixed scope · 2 weeks Process and coverage audit, your top 10 risks with fixes, and a readout with your leadership."
+  },
+  {
+   "id": "en-services-29",
+   "lang": "en",
+   "page": "Services",
+   "url": "https://keelward.io/services/",
+   "heading": "QA Retainer",
+   "text": "Monthly Ongoing testing capacity, automation upkeep and a monthly quality report."
+  },
+  {
+   "id": "en-services-30",
+   "lang": "en",
+   "page": "Services",
+   "url": "https://keelward.io/services/",
+   "heading": "AI Assurance",
+   "text": "An evidence-based answer to the question every AI team faces: is it ready to ship? Best for Companies putting assistants, copilots or AI search in front of customers or staff. Tools we use DeepEval Ragas MLflow Python"
+  },
+  {
+   "id": "en-services-31",
+   "lang": "en",
+   "page": "Services",
+   "url": "https://keelward.io/services/",
+   "heading": "LLM & chatbot testing",
+   "text": "Scenario libraries built from real user intents, plus tone, refusal and edge-case checks."
+  },
+  {
+   "id": "en-services-32",
+   "lang": "en",
+   "page": "Services",
+   "url": "https://keelward.io/services/",
+   "heading": "RAG evaluation",
+   "text": "Retrieval, faithfulness and answer-relevance metrics on golden datasets you can rerun."
+  },
+  {
+   "id": "en-services-33",
+   "lang": "en",
+   "page": "Services",
+   "url": "https://keelward.io/services/",
+   "heading": "Hallucination & safety review",
+   "text": "Adversarial probing and hallucination rates by topic, with a risk report and mitigations."
+  },
+  {
+   "id": "en-services-34",
+   "lang": "en",
+   "page": "Services",
+   "url": "https://keelward.io/services/",
+   "heading": "AI regression & monitoring",
+   "text": "Automated evaluations in CI so quality does not drift when prompts, models or data change. Starter packages Sample work →"
+  },
+  {
+   "id": "en-services-35",
+   "lang": "en",
+   "page": "Services",
+   "url": "https://keelward.io/services/",
+   "heading": "AI Chatbot Quality Audit",
+   "text": "Fixed scope · 2–3 weeks A scored evaluation across hundreds of scenarios, a prioritized fix list and an executive summary."
+  },
+  {
+   "id": "en-services-36",
+   "lang": "en",
+   "page": "Services",
+   "url": "https://keelward.io/services/",
+   "heading": "AI Evaluation Pipeline",
+   "text": "Project A reusable evaluation pipeline you own, wired into CI, with training for your team."
+  },
+  {
+   "id": "en-services-37",
+   "lang": "en",
+   "page": "Services",
+   "url": "https://keelward.io/services/",
+   "heading": "Software Development",
+   "text": "Products and automations built by engineers who test everything they ship. Best for Startups and small businesses that need a dependable build partner. Tools we use Python Next.js Django Node.js PostgreSQL"
+  },
+  {
+   "id": "en-services-38",
+   "lang": "en",
+   "page": "Services",
+   "url": "https://keelward.io/services/",
+   "heading": "Web applications",
+   "text": "Business web apps from first version to production, with tested releases and documentation."
+  },
+  {
+   "id": "en-services-39",
+   "lang": "en",
+   "page": "Services",
+   "url": "https://keelward.io/services/",
+   "heading": "Backend & API development",
+   "text": "Reliable services and integrations between the platforms you use."
+  },
+  {
+   "id": "en-services-40",
+   "lang": "en",
+   "page": "Services",
+   "url": "https://keelward.io/services/",
+   "heading": "Business process automation",
+   "text": "Scripts, bots and scheduled jobs that remove repetitive manual work."
+  },
+  {
+   "id": "en-services-41",
+   "lang": "en",
+   "page": "Services",
+   "url": "https://keelward.io/services/",
+   "heading": "AI-powered features",
+   "text": "Assistants, search and summarization added to your product, with evaluation built in. Starter packages Sample work →"
+  },
+  {
+   "id": "en-services-42",
+   "lang": "en",
+   "page": "Services",
+   "url": "https://keelward.io/services/",
+   "heading": "Automation Sprint",
+   "text": "Fixed scope · 2–4 weeks One painful manual process, automated end to end, with a runbook and handover."
+  },
+  {
+   "id": "en-services-43",
+   "lang": "en",
+   "page": "Services",
+   "url": "https://keelward.io/services/",
+   "heading": "MVP Build",
+   "text": "Milestones A tested first version of your product, delivered in milestones with weekly demos."
+  },
+  {
+   "id": "en-services-44",
+   "lang": "en",
+   "page": "Services",
+   "url": "https://keelward.io/services/",
+   "heading": "Data & Analytics",
+   "text": "Clean data, clear KPIs and reports that match across systems. Best for Finance, operations, logistics and real estate teams that run on reports. Tools we use Python Power BI DAX SQL Azure Databricks AWS"
+  },
+  {
+   "id": "en-services-45",
+   "lang": "en",
+   "page": "Services",
+   "url": "https://keelward.io/services/",
+   "heading": "Data pipelines & integration",
+   "text": "Scheduled ingestion and transformation with error handling and documented lineage."
+  },
+  {
+   "id": "en-services-46",
+   "lang": "en",
+   "page": "Services",
+   "url": "https://keelward.io/services/",
+   "heading": "Data quality frameworks",
+   "text": "Rules, automated checks and alerts that catch bad data before it reaches reports."
+  },
+  {
+   "id": "en-services-47",
+   "lang": "en",
+   "page": "Services",
+   "url": "https://keelward.io/services/",
+   "heading": "Power BI dashboards",
+   "text": "Decision dashboards with clean models, clear KPIs and bilingual pages on request. Starter packages Sample work →"
+  },
+  {
+   "id": "en-services-48",
+   "lang": "en",
+   "page": "Services",
+   "url": "https://keelward.io/services/",
+   "heading": "Dashboard in a Box",
+   "text": "Fixed scope · 2–3 weeks A production dashboard on your existing data, with refresh set up and training for report owners."
+  },
+  {
+   "id": "en-services-49",
+   "lang": "en",
+   "page": "Services",
+   "url": "https://keelward.io/services/",
+   "heading": "Data Quality Assessment",
+   "text": "Fixed scope Profiling of your key tables, a quality scorecard and a remediation roadmap."
+  },
+  {
+   "id": "en-services-50",
+   "lang": "en",
+   "page": "Services",
+   "url": "https://keelward.io/services/",
+   "heading": "Training & Academy",
+   "text": "Practical training in QA, automation and AI testing, taught by practitioners. Best for Companies upskilling their teams, career changers and testers moving into automation. Tools we use Playwright Pytest DeepEval Ragas Python GitHub Academy"
+  },
+  {
+   "id": "en-services-51",
+   "lang": "en",
+   "page": "Services",
+   "url": "https://keelward.io/services/",
+   "heading": "Corporate team workshops",
+   "text": "Private training tailored to your team’s stack, in English or French."
+  },
+  {
+   "id": "en-services-52",
+   "lang": "en",
+   "page": "Services",
+   "url": "https://keelward.io/services/",
+   "heading": "Courses for individuals",
+   "text": "QA Foundations, Test Automation, and AI Testing & LLM Evaluation."
+  },
+  {
+   "id": "en-services-53",
+   "lang": "en",
+   "page": "Services",
+   "url": "https://keelward.io/services/",
+   "heading": "1:1 mentorship",
+   "text": "Career coaching, mock interviews and portfolio reviews. Starter packages Sample work →"
+  },
+  {
+   "id": "en-services-54",
+   "lang": "en",
+   "page": "Services",
+   "url": "https://keelward.io/services/",
+   "heading": "Team Upskill Workshop",
+   "text": "1–2 days A custom agenda, hands-on labs and course materials your team keeps."
+  },
+  {
+   "id": "en-services-55",
+   "lang": "en",
+   "page": "Services",
+   "url": "https://keelward.io/services/",
+   "heading": "QA Launchpad Cohort",
+   "text": "8 weeks A small live cohort with supervised work on real projects and a certificate."
+  },
+  {
+   "id": "en-services-56",
+   "lang": "en",
+   "page": "Services",
+   "url": "https://keelward.io/services/",
+   "heading": "Planning a launch, an AI feature or a QA reset?",
+   "text": "Tell us what you are building. We will suggest the smallest useful first step. Book a free consultation Product names and logos are trademarks of their respective owners. Their use does not imply partnership or endorsement."
+  },
+  {
+   "id": "en-about-57",
+   "lang": "en",
+   "page": "About",
+   "url": "https://keelward.io/about/",
+   "heading": "Behind the name",
+   "text": "The keel is the backbone along the bottom of a ship. It keeps the vessel steady, stops it drifting off course, and lets it sail into the wind. “-ward” means toward, as in forward. Together, Keelward means moving forward on a steady course. That is what we do for our clients: keep their software, AI and data stable and reliable, so they can move forward with confidence. Our mission Help growing companies ship software and AI they can trust, and help people build real careers in quality engineering."
+  },
+  {
+   "id": "en-about-58",
+   "lang": "en",
+   "page": "About",
+   "url": "https://keelward.io/about/",
+   "heading": "How we deliver",
+   "text": "Your team One point of contact Senior lead Scopes, reviews and signs off every deliverable US specialists Offshore specialists Academy graduates"
+  },
+  {
+   "id": "en-about-59",
+   "lang": "en",
+   "page": "About",
+   "url": "https://keelward.io/about/",
+   "heading": "One accountable lead",
+   "text": "Every engagement is scoped, reviewed and signed off by a senior engineer, so quality stays high as the team grows."
+  },
+  {
+   "id": "en-about-60",
+   "lang": "en",
+   "page": "About",
+   "url": "https://keelward.io/about/",
+   "heading": "A flexible delivery network",
+   "text": "Vetted specialists in the US and offshore join projects when needed, so the team scales with your work."
+  },
+  {
+   "id": "en-about-61",
+   "lang": "en",
+   "page": "About",
+   "url": "https://keelward.io/about/",
+   "heading": "Academy graduates",
+   "text": "Engineers trained on our methods join under senior review, which keeps quality and knowledge consistent."
+  },
+  {
+   "id": "en-about-62",
+   "lang": "en",
+   "page": "About",
+   "url": "https://keelward.io/about/",
+   "heading": "Independence",
+   "text": "We report what we find, clearly and honestly, even when the answer is “not ready yet”."
+  },
+  {
+   "id": "en-about-63",
+   "lang": "en",
+   "page": "About",
+   "url": "https://keelward.io/about/",
+   "heading": "Clarity",
+   "text": "Plain language, fixed scopes and written results that your whole team can act on."
+  },
+  {
+   "id": "en-about-64",
+   "lang": "en",
+   "page": "About",
+   "url": "https://keelward.io/about/",
+   "heading": "Lasting value",
+   "text": "We leave behind tests, documentation and skills your team keeps using."
+  },
+  {
+   "id": "en-about-65",
+   "lang": "en",
+   "page": "About",
+   "url": "https://keelward.io/about/",
+   "heading": "At a glance",
+   "text": "Company Keelward LLC Based in Georgia, USA Languages English and French Clients United States and international"
+  },
+  {
+   "id": "en-academy-66",
+   "lang": "en",
+   "page": "Keelward Academy",
+   "url": "https://keelward.io/academy/",
+   "heading": "Learn testing the way real teams do it",
+   "text": "Courses, mentorship and team workshops taught by practitioners. Students practise on real projects under supervision, in English or French."
+  },
+  {
+   "id": "en-academy-67",
+   "lang": "en",
+   "page": "Keelward Academy",
+   "url": "https://keelward.io/academy/",
+   "heading": "QA Foundations",
+   "text": "How software gets tested in real teams: the test lifecycle, test cases, defect reports and traceability. Intermediate"
+  },
+  {
+   "id": "en-academy-68",
+   "lang": "en",
+   "page": "Keelward Academy",
+   "url": "https://keelward.io/academy/",
+   "heading": "Test Automation",
+   "text": "Python for testers, Playwright, Pytest, API testing and CI pipelines with GitHub Actions. Advanced"
+  },
+  {
+   "id": "en-academy-69",
+   "lang": "en",
+   "page": "Keelward Academy",
+   "url": "https://keelward.io/academy/",
+   "heading": "AI Testing & LLM Evaluation",
+   "text": "How LLMs fail and how to measure it, RAG evaluation with Ragas and DeepEval, and a supervised capstone on a real chatbot."
+  },
+  {
+   "id": "en-academy-70",
+   "lang": "en",
+   "page": "Keelward Academy",
+   "url": "https://keelward.io/academy/",
+   "heading": "Real projects, supervised",
+   "text": "Our students work on real project tasks alongside experienced engineers. Client work is used only with client consent, under a signed NDA, and with anonymized data where needed. Strong graduates can be invited to join our paid delivery network. Beginner QA Foundations Intermediate Test Automation Advanced AI Testing & LLM Evaluation Practice Supervised real project By selection Keelward delivery network"
+  },
+  {
+   "id": "en-academy-71",
+   "lang": "en",
+   "page": "Keelward Academy",
+   "url": "https://keelward.io/academy/",
+   "heading": "Live cohorts",
+   "text": "Small groups, live sessions, weekly feedback and a portfolio of real deliverables."
+  },
+  {
+   "id": "en-academy-72",
+   "lang": "en",
+   "page": "Keelward Academy",
+   "url": "https://keelward.io/academy/",
+   "heading": "1:1 mentorship",
+   "text": "Resume and LinkedIn review, mock interviews and a job-search plan."
+  },
+  {
+   "id": "en-academy-73",
+   "lang": "en",
+   "page": "Keelward Academy",
+   "url": "https://keelward.io/academy/",
+   "heading": "Corporate workshops",
+   "text": "One or two days of focused training on your team’s own stack, in English or French."
+  },
+  {
+   "id": "en-academy-74",
+   "lang": "en",
+   "page": "Keelward Academy",
+   "url": "https://keelward.io/academy/",
+   "heading": "Interested in a course or a team workshop?",
+   "text": "Tell us your goals and current level. We will point you to the right track. Ask about the Academy"
+  },
+  {
+   "id": "en-contact-75",
+   "lang": "en",
+   "page": "Contact",
+   "url": "https://keelward.io/contact/",
+   "heading": "Let’s talk about what you are building",
+   "text": "Send us a few lines about your project or your goals. We reply in English or French. Email contact@keelward.io We reply within one business day. Location Georgia, USA · Working with clients in the US and abroad"
+  },
+  {
+   "id": "en-contact-76",
+   "lang": "en",
+   "page": "Contact",
+   "url": "https://keelward.io/contact/",
+   "heading": "What happens next",
+   "text": "We read your message and ask a few questions if needed. We set up a short call to understand your goals. You receive a written proposal with scope, timeline and price."
+  },
+  {
+   "id": "en-privacy-77",
+   "lang": "en",
+   "page": "Privacy",
+   "url": "https://keelward.io/privacy/",
+   "heading": "What this website collects",
+   "text": "This website does not use cookies, analytics or tracking scripts. The only information it stores is what you send through the contact form."
+  },
+  {
+   "id": "en-privacy-78",
+   "lang": "en",
+   "page": "Privacy",
+   "url": "https://keelward.io/privacy/",
+   "heading": "The contact form",
+   "text": "When you send the contact form, we store your name, email, optional company and phone, topic and message in our database on Google Cloud (United States), with a shortened, non-reversible fingerprint of your network address to block spam. Only the Keelward team can read it. We use it only to reply and to discuss your request, and delete it within 24 months, or sooner if you ask."
+  },
+  {
+   "id": "en-privacy-79",
+   "lang": "en",
+   "page": "Privacy",
+   "url": "https://keelward.io/privacy/",
+   "heading": "When you email us",
+   "text": "If you email Keelward LLC, we use your message and contact details only to reply and to discuss your request. We do not sell or share them for marketing."
+  },
+  {
+   "id": "en-privacy-80",
+   "lang": "en",
+   "page": "Privacy",
+   "url": "https://keelward.io/privacy/",
+   "heading": "Your choices",
+   "text": "You can ask us at any time to see, correct or delete the information you sent us."
+  },
+  {
+   "id": "en-privacy-81",
+   "lang": "en",
+   "page": "Privacy",
+   "url": "https://keelward.io/privacy/",
+   "heading": "Hosting",
+   "text": "The website is hosted on Google Firebase Hosting, which may keep standard technical logs, such as IP addresses, to deliver and secure the site."
+  },
+  {
+   "id": "en-readiness-82",
+   "lang": "en",
+   "page": "Release Readiness Check",
+   "url": "https://keelward.io/readiness/",
+   "heading": "How ready is your next release?",
+   "text": "Answer 8 quick questions about how your team tests and ships. You get a readiness score and the most useful next step. Nothing you enter is stored or sent. Readiness score – /100 Answer all questions to see your result."
+  },
+  {
+   "id": "en-work-83",
+   "lang": "en",
+   "page": "Sample work",
+   "url": "https://keelward.io/work/",
+   "heading": "See what you get",
+   "text": "Every engagement ends with a written deliverable your whole team can act on. Here are three examples, using fictional companies and illustrative data."
+  },
+  {
+   "id": "en-work-84",
+   "lang": "en",
+   "page": "Sample work",
+   "url": "https://keelward.io/work/",
+   "heading": "QA Health Check",
+   "text": "A two-week review of how you test today, with your top risks and a 90-day plan. What you get Readiness score and leadership summary Risks ranked by severity, with fixes Test coverage by user journey 90-day action plan See the service QA Health Check Sample · fictional data Fictional online retailer 62 Readiness score Solid basics, high risk in checkout Top risks High No automated regression on checkout High Test data copied from production Medium Defects have no severity or owner Automated coverage by journey Checkout 35% Accounts 60% Search 72% Admin 20% 90-day plan W1–4 Automate checkout tests in CI W5–8 Synthetic test data W9–12 Defect triage and sign-off"
+  },
+  {
+   "id": "en-work-85",
+   "lang": "en",
+   "page": "Sample work",
+   "url": "https://keelward.io/work/",
+   "heading": "AI Chatbot Quality Audit",
+   "text": "A scored evaluation of your assistant across hundreds of scenarios, with a prioritized fix list. What you get Scorecard per metric, with thresholds Real failure examples, explained Prioritized fixes Reusable evaluation set See the service AI Chatbot Quality Audit Sample · fictional data Fictional support assistant (RAG) Not ready yet: 2 metrics below threshold Results across 420 scenarios Answer accuracy 81% ≥ 90% Faithfulness to sources 88% ≥ 85% Hallucination rate 7% ≤ 3% Correct refusals 92% ≥ 90% Tone and policy 96% ≥ 95% Fix before launch 01 Invents refund timelines not in the knowledge base 02 Cites the wrong source for warranty questions 03 Answers out-of-scope legal questions"
+  },
+  {
+   "id": "en-work-86",
+   "lang": "en",
+   "page": "Sample work",
+   "url": "https://keelward.io/work/",
+   "heading": "Data Quality Assessment",
+   "text": "Profiling of your key tables, a quality scorecard and a remediation roadmap. What you get Quality score by dimension Problem tables and columns Recommended automated checks Remediation roadmap See the service Data Quality Assessment Sample · fictional data Fictional sales data warehouse 92 Overall quality score Score by dimension 97% Completeness 91% Validity 99% Uniqueness 84% Timeliness 88% Consistency Top issues orders.region Blank on 6% of rows customers.email Invalid formats daily_sales Loaded late on 3 of 30 days These samples use fictional companies and illustrative data. They show the shape of our deliverables, not results from a real client."
+  },
+  {
+   "id": "en-work-87",
+   "lang": "en",
+   "page": "Sample work",
+   "url": "https://keelward.io/work/",
+   "heading": "Want one for your product?",
+   "text": "Tell us what you ship. We will suggest the smallest useful first step. Book a free consultation"
+  },
+  {
+   "id": "en-explore-88",
+   "lang": "en",
+   "page": "Explore",
+   "url": "https://keelward.io/explore/",
+   "heading": "Explore everything we do",
+   "text": "Every point is a service, a package or a course. Click to read more and see how it all connects. Click a point to read more · drag to move · scroll or pinch to zoom"
+  },
+  {
+   "id": "fr-home-89",
+   "lang": "fr",
+   "page": "Keelward",
+   "url": "https://keelward.io/fr/",
+   "heading": "Des logiciels et une IAdignes de confiance.",
+   "text": "Keelward aide les entreprises en croissance à livrer des logiciels et une IA fiables, grâce à des tests de niveau senior, une évaluation indépendante de l’IA et des formations qui renforcent leurs équipes. Réserver un échange gratuit Explorer la carte Un senior sur chaque mission Une évaluation IA indépendante Anglais et français Prêt pour la mise en production Exemple Suite de régression Réussie Tests de contrat API Réussis Exactitude des réponses du chatbot Dans le seuil Revue des hallucinations Validée Rapprochement des données Conforme Prêt à livrer Keelward : la quille solide derrière des logiciels dignes de confiance. Ce que nous faisons"
+  },
+  {
+   "id": "fr-home-90",
+   "lang": "fr",
+   "page": "Keelward",
+   "url": "https://keelward.io/fr/",
+   "heading": "Un seul partenaire, du premier test à la mise en production",
+   "text": "Commencez par le service dont vous avez besoin aujourd’hui. Ajoutez les autres au fil de votre croissance, sans changer de prestataire."
+  },
+  {
+   "id": "fr-home-91",
+   "lang": "fr",
+   "page": "Keelward",
+   "url": "https://keelward.io/fr/",
+   "heading": "Ingénierie qualité",
+   "text": "Stratégie de test, automatisation et mises en production sereines."
+  },
+  {
+   "id": "fr-home-92",
+   "lang": "fr",
+   "page": "Keelward",
+   "url": "https://keelward.io/fr/",
+   "heading": "Assurance IA",
+   "text": "Tests indépendants des chatbots, applications LLM et systèmes RAG."
+  },
+  {
+   "id": "fr-home-93",
+   "lang": "fr",
+   "page": "Keelward",
+   "url": "https://keelward.io/fr/",
+   "heading": "Développement logiciel",
+   "text": "Applications web, API et automatisation, testées dès le premier jour."
+  },
+  {
+   "id": "fr-home-94",
+   "lang": "fr",
+   "page": "Keelward",
+   "url": "https://keelward.io/fr/",
+   "heading": "Données et analytique",
+   "text": "Des pipelines fiables et des tableaux de bord réellement utilisés."
+  },
+  {
+   "id": "fr-home-95",
+   "lang": "fr",
+   "page": "Keelward",
+   "url": "https://keelward.io/fr/",
+   "heading": "Voyez comment tout est relié",
+   "text": "Services, forfaits, Académie et notre organisation sur une seule carte. Cliquez sur un point pour en savoir plus, zoomez pour explorer. Ouvrir en plein écran Cliquez sur un point pour en savoir plus · glissez pour déplacer · molette ou pincement pour zoomer Par où commencer"
+  },
+  {
+   "id": "fr-home-96",
+   "lang": "fr",
+   "page": "Keelward",
+   "url": "https://keelward.io/fr/",
+   "heading": "Des forfaits au périmètre fixe, avec un prix clair avant de commencer",
+   "text": "Chaque forfait a un périmètre, un délai et un livrable définis : vous savez exactement ce que vous obtenez. Demandez-nous un devis. Voir des exemples de livrables Ingénierie qualité"
+  },
+  {
+   "id": "fr-home-97",
+   "lang": "fr",
+   "page": "Keelward",
+   "url": "https://keelward.io/fr/",
+   "heading": "Bilan de santé QA",
+   "text": "Audit des processus et de la couverture, vos 10 principaux risques avec correctifs, et une restitution à votre direction. Périmètre fixe · 2 semaines Assurance IA"
+  },
+  {
+   "id": "fr-home-98",
+   "lang": "fr",
+   "page": "Keelward",
+   "url": "https://keelward.io/fr/",
+   "heading": "Audit qualité de chatbot IA",
+   "text": "Une évaluation notée sur des centaines de scénarios, une liste de correctifs priorisés et une synthèse pour la direction. Périmètre fixe · 2 à 3 semaines Développement logiciel"
+  },
+  {
+   "id": "fr-home-99",
+   "lang": "fr",
+   "page": "Keelward",
+   "url": "https://keelward.io/fr/",
+   "heading": "Sprint d’automatisation",
+   "text": "Un processus manuel pénible, automatisé de bout en bout, avec procédure et passation. Périmètre fixe · 2 à 4 semaines Données et analytique"
+  },
+  {
+   "id": "fr-home-100",
+   "lang": "fr",
+   "page": "Keelward",
+   "url": "https://keelward.io/fr/",
+   "heading": "Tableau de bord clé en main",
+   "text": "Un tableau de bord en production sur vos données existantes, avec actualisation configurée et formation des responsables. Périmètre fixe · 2 à 3 semaines Pourquoi Keelward"
+  },
+  {
+   "id": "fr-home-101",
+   "lang": "fr",
+   "page": "Keelward",
+   "url": "https://keelward.io/fr/",
+   "heading": "Un senior sur chaque mission",
+   "text": "Stratégie et réalisation par un ingénieur qualité expérimenté, et non par un junior à qui l’on confie votre compte."
+  },
+  {
+   "id": "fr-home-102",
+   "lang": "fr",
+   "page": "Keelward",
+   "url": "https://keelward.io/fr/",
+   "heading": "Une évaluation IA indépendante",
+   "text": "Nous ne vous vendons pas le chatbot. Nous vous disons, preuves à l’appui, s’il est prêt."
+  },
+  {
+   "id": "fr-home-103",
+   "lang": "fr",
+   "page": "Keelward",
+   "url": "https://keelward.io/fr/",
+   "heading": "Tester, développer, analyser",
+   "text": "Commencez par un audit et poursuivez vers le développement ou les tableaux de bord avec la même équipe."
+  },
+  {
+   "id": "fr-home-104",
+   "lang": "fr",
+   "page": "Keelward",
+   "url": "https://keelward.io/fr/",
+   "heading": "Périmètres fixes, résultats clairs",
+   "text": "Des livrables définis et des constats écrits que toute votre équipe peut exploiter."
+  },
+  {
+   "id": "fr-home-105",
+   "lang": "fr",
+   "page": "Keelward",
+   "url": "https://keelward.io/fr/",
+   "heading": "Anglais et français",
+   "text": "Travail, documentation et formation dans l’une ou l’autre langue, pour les équipes d’Amérique du Nord, d’Europe et d’Afrique."
+  },
+  {
+   "id": "fr-home-106",
+   "lang": "fr",
+   "page": "Keelward",
+   "url": "https://keelward.io/fr/",
+   "heading": "Une équipe qui s’adapte",
+   "text": "Des spécialistes sélectionnés, aux États-Unis et à l’international, renforcent l’équipe au besoin, toujours sous revue senior. Démo en direct"
+  },
+  {
+   "id": "fr-home-107",
+   "lang": "fr",
+   "page": "Keelward",
+   "url": "https://keelward.io/fr/",
+   "heading": "Regardez nos tests détecter de vrais défauts",
+   "text": "Lancez une vraie suite de non-régression sur une application d’entraînement et suivez chaque étape, capture et défaut en direct. Moins d’une minute. Lancer la démo Auto-évaluation gratuite"
+  },
+  {
+   "id": "fr-home-108",
+   "lang": "fr",
+   "page": "Keelward",
+   "url": "https://keelward.io/fr/",
+   "heading": "Votre prochaine version est-elle prête ?",
+   "text": "Faites le diagnostic gratuit de 2 minutes et obtenez un score et une recommandation. Commencer le diagnostic Notre méthode"
+  },
+  {
+   "id": "fr-home-109",
+   "lang": "fr",
+   "page": "Keelward",
+   "url": "https://keelward.io/fr/",
+   "heading": "Découvrir",
+   "text": "Un court échange pour comprendre votre produit, vos risques et votre échéance. 02"
+  },
+  {
+   "id": "fr-home-110",
+   "lang": "fr",
+   "page": "Keelward",
+   "url": "https://keelward.io/fr/",
+   "heading": "Évaluer",
+   "text": "Nous analysons l’existant et proposons un périmètre, un délai et un prix fixes. 03"
+  },
+  {
+   "id": "fr-home-111",
+   "lang": "fr",
+   "page": "Keelward",
+   "url": "https://keelward.io/fr/",
+   "heading": "Réaliser",
+   "text": "Un travail piloté par un senior, dans vos outils, avec un avancement hebdomadaire visible. 04"
+  },
+  {
+   "id": "fr-home-112",
+   "lang": "fr",
+   "page": "Keelward",
+   "url": "https://keelward.io/fr/",
+   "heading": "Transmettre",
+   "text": "Résultats écrits, documentation et présentation pour que votre équipe s’approprie le travail. Pour qui"
+  },
+  {
+   "id": "fr-home-113",
+   "lang": "fr",
+   "page": "Keelward",
+   "url": "https://keelward.io/fr/",
+   "heading": "Agences de développement",
+   "text": "Équipes qui ont besoin d’une QA à proposer à leurs propres clients."
+  },
+  {
+   "id": "fr-home-114",
+   "lang": "fr",
+   "page": "Keelward",
+   "url": "https://keelward.io/fr/",
+   "heading": "Organisations pilotées par les données",
+   "text": "Équipes finance, opérations et immobilier qui pilotent par les rapports."
+  },
+  {
+   "id": "fr-home-115",
+   "lang": "fr",
+   "page": "Keelward",
+   "url": "https://keelward.io/fr/",
+   "heading": "Un lancement, une fonctionnalité IA ou une remise à plat de la QA en vue ?",
+   "text": "Parlez-nous de votre projet. Nous vous proposerons la première étape la plus utile. Réserver un échange gratuit"
+  },
+  {
+   "id": "fr-services-116",
+   "lang": "fr",
+   "page": "Services",
+   "url": "https://keelward.io/fr/services/",
+   "heading": "Cinq façons de livrer en toute confiance",
+   "text": "La qualité est au cœur de notre métier. Chaque service est piloté par un ingénieur senior et réalisé avec la même rigueur de test, qu’il s’agisse d’auditer votre IA ou de développer votre prochaine fonctionnalité. Notre place dans votre cycle de livraison 01 · Construire Développement logiciel Applications web, API et automatisation, testées dès le premier jour. 02 · Tester Ingénierie qualité Stratégie de test, automatisation et mises en production sereines. 03 · Évaluer l’IA Assurance IA Tests indépendants des chatbots, applications LLM et systèmes RAG. 04 · Mesurer Données et analytique Des pipelines fiables et des tableaux de bord réellement utilisés. Formation et Académie · renforce votre équipe à chaque étape"
+  },
+  {
+   "id": "fr-services-117",
+   "lang": "fr",
+   "page": "Services",
+   "url": "https://keelward.io/fr/services/",
+   "heading": "Ingénierie qualité",
+   "text": "Une vision claire des risques de mise en production et un système de tests qui continue de fonctionner après notre départ. Idéal pour Startups en préparation de lancement, agences et équipes confrontées à de plus en plus de bugs en production. Outils utilisés Playwright Selenium Pytest Postman Tricentis Tosca GitHub Actions Jira TestRail Voir la QA en action"
+  },
+  {
+   "id": "fr-services-118",
+   "lang": "fr",
+   "page": "Services",
+   "url": "https://keelward.io/fr/services/",
+   "heading": "Stratégie de test et audit QA",
+   "text": "Un examen structuré de vos pratiques de test, avec des constats classés par risque et une feuille de route sur 90 jours."
+  },
+  {
+   "id": "fr-services-119",
+   "lang": "fr",
+   "page": "Services",
+   "url": "https://keelward.io/fr/services/",
+   "heading": "Frameworks d’automatisation des tests",
+   "text": "Une automatisation maintenable, exécutée dans votre pipeline CI/CD, que votre équipe peut faire évoluer."
+  },
+  {
+   "id": "fr-services-120",
+   "lang": "fr",
+   "page": "Services",
+   "url": "https://keelward.io/fr/services/",
+   "heading": "Tests d’API, d’intégration et de régression",
+   "text": "Vérifications de contrat, d’intégration et de bout en bout entre vos services, à chaque version."
+  },
+  {
+   "id": "fr-services-121",
+   "lang": "fr",
+   "page": "Services",
+   "url": "https://keelward.io/fr/services/",
+   "heading": "Validation ETL et des données",
+   "text": "La preuve que vos données arrivent complètes, exactes et à temps."
+  },
+  {
+   "id": "fr-services-122",
+   "lang": "fr",
+   "page": "Services",
+   "url": "https://keelward.io/fr/services/",
+   "heading": "QA managée et renfort d’équipe",
+   "text": "Des testeurs intégrés à vos sprints, avec tri des anomalies et validation des mises en production. Forfaits de démarrage Exemples de livrables →"
+  },
+  {
+   "id": "fr-services-123",
+   "lang": "fr",
+   "page": "Services",
+   "url": "https://keelward.io/fr/services/",
+   "heading": "Bilan de santé QA",
+   "text": "Périmètre fixe · 2 semaines Audit des processus et de la couverture, vos 10 principaux risques avec correctifs, et une restitution à votre direction."
+  },
+  {
+   "id": "fr-services-124",
+   "lang": "fr",
+   "page": "Services",
+   "url": "https://keelward.io/fr/services/",
+   "heading": "Accompagnement QA mensuel",
+   "text": "Mensuel Une capacité de test continue, la maintenance de l’automatisation et un rapport qualité mensuel."
+  },
+  {
+   "id": "fr-services-125",
+   "lang": "fr",
+   "page": "Services",
+   "url": "https://keelward.io/fr/services/",
+   "heading": "Assurance IA",
+   "text": "Une réponse étayée à la question que se pose toute équipe IA : est-ce prêt à être mis en production ? Idéal pour Entreprises qui mettent des assistants, copilotes ou recherches IA à disposition de leurs clients ou équipes. Outils utilisés DeepEval Ragas MLflow Python"
+  },
+  {
+   "id": "fr-services-126",
+   "lang": "fr",
+   "page": "Services",
+   "url": "https://keelward.io/fr/services/",
+   "heading": "Test des LLM et chatbots",
+   "text": "Des bibliothèques de scénarios issues des vraies intentions des utilisateurs, avec vérification du ton, des refus et des cas limites."
+  },
+  {
+   "id": "fr-services-127",
+   "lang": "fr",
+   "page": "Services",
+   "url": "https://keelward.io/fr/services/",
+   "heading": "Évaluation RAG",
+   "text": "Métriques de recherche, de fidélité et de pertinence des réponses sur des jeux de référence réutilisables."
+  },
+  {
+   "id": "fr-services-128",
+   "lang": "fr",
+   "page": "Services",
+   "url": "https://keelward.io/fr/services/",
+   "heading": "Revue des hallucinations et de la sécurité",
+   "text": "Tests adverses et taux d’hallucination par thème, avec un rapport de risques et des mesures correctives."
+  },
+  {
+   "id": "fr-services-129",
+   "lang": "fr",
+   "page": "Services",
+   "url": "https://keelward.io/fr/services/",
+   "heading": "Régression et suivi de l’IA",
+   "text": "Des évaluations automatisées en CI pour que la qualité ne dérive pas quand les prompts, les modèles ou les données changent. Forfaits de démarrage Exemples de livrables →"
+  },
+  {
+   "id": "fr-services-130",
+   "lang": "fr",
+   "page": "Services",
+   "url": "https://keelward.io/fr/services/",
+   "heading": "Audit qualité de chatbot IA",
+   "text": "Périmètre fixe · 2 à 3 semaines Une évaluation notée sur des centaines de scénarios, une liste de correctifs priorisés et une synthèse pour la direction."
+  },
+  {
+   "id": "fr-services-131",
+   "lang": "fr",
+   "page": "Services",
+   "url": "https://keelward.io/fr/services/",
+   "heading": "Pipeline d’évaluation IA",
+   "text": "Projet Un pipeline d’évaluation réutilisable qui vous appartient, intégré à votre CI, avec formation de votre équipe."
+  },
+  {
+   "id": "fr-services-132",
+   "lang": "fr",
+   "page": "Services",
+   "url": "https://keelward.io/fr/services/",
+   "heading": "Développement logiciel",
+   "text": "Des produits et automatisations conçus par des ingénieurs qui testent tout ce qu’ils livrent. Idéal pour Startups et petites entreprises qui ont besoin d’un partenaire de développement fiable. Outils utilisés Python Next.js Django Node.js PostgreSQL"
+  },
+  {
+   "id": "fr-services-133",
+   "lang": "fr",
+   "page": "Services",
+   "url": "https://keelward.io/fr/services/",
+   "heading": "Applications web",
+   "text": "Des applications web métier, de la première version à la production, avec des versions testées et documentées."
+  },
+  {
+   "id": "fr-services-134",
+   "lang": "fr",
+   "page": "Services",
+   "url": "https://keelward.io/fr/services/",
+   "heading": "Développement backend et API",
+   "text": "Des services fiables et des intégrations entre les plateformes que vous utilisez."
+  },
+  {
+   "id": "fr-services-135",
+   "lang": "fr",
+   "page": "Services",
+   "url": "https://keelward.io/fr/services/",
+   "heading": "Automatisation des processus métier",
+   "text": "Des scripts, bots et tâches planifiées qui suppriment le travail manuel répétitif."
+  },
+  {
+   "id": "fr-services-136",
+   "lang": "fr",
+   "page": "Services",
+   "url": "https://keelward.io/fr/services/",
+   "heading": "Fonctionnalités propulsées par l’IA",
+   "text": "Assistants, recherche et résumé automatique ajoutés à votre produit, avec évaluation intégrée. Forfaits de démarrage Exemples de livrables →"
+  },
+  {
+   "id": "fr-services-137",
+   "lang": "fr",
+   "page": "Services",
+   "url": "https://keelward.io/fr/services/",
+   "heading": "Sprint d’automatisation",
+   "text": "Périmètre fixe · 2 à 4 semaines Un processus manuel pénible, automatisé de bout en bout, avec procédure et passation."
+  },
+  {
+   "id": "fr-services-138",
+   "lang": "fr",
+   "page": "Services",
+   "url": "https://keelward.io/fr/services/",
+   "heading": "Réalisation de MVP",
+   "text": "Par jalons Une première version testée de votre produit, livrée par jalons avec des démonstrations hebdomadaires."
+  },
+  {
+   "id": "fr-services-139",
+   "lang": "fr",
+   "page": "Services",
+   "url": "https://keelward.io/fr/services/",
+   "heading": "Données et analytique",
+   "text": "Des données propres, des KPI clairs et des rapports cohérents d’un système à l’autre. Idéal pour Équipes finance, opérations, logistique et immobilier qui pilotent à partir de rapports. Outils utilisés Python Power BI DAX SQL Azure Databricks AWS"
+  },
+  {
+   "id": "fr-services-140",
+   "lang": "fr",
+   "page": "Services",
+   "url": "https://keelward.io/fr/services/",
+   "heading": "Pipelines et intégration de données",
+   "text": "Ingestion et transformation planifiées, avec gestion des erreurs et lignage documenté."
+  },
+  {
+   "id": "fr-services-141",
+   "lang": "fr",
+   "page": "Services",
+   "url": "https://keelward.io/fr/services/",
+   "heading": "Cadres de qualité des données",
+   "text": "Des règles, contrôles automatisés et alertes qui détectent les données erronées avant les rapports."
+  },
+  {
+   "id": "fr-services-142",
+   "lang": "fr",
+   "page": "Services",
+   "url": "https://keelward.io/fr/services/",
+   "heading": "Tableaux de bord Power BI",
+   "text": "Des tableaux de bord décisionnels avec des modèles propres, des KPI clairs et des pages bilingues sur demande. Forfaits de démarrage Exemples de livrables →"
+  },
+  {
+   "id": "fr-services-143",
+   "lang": "fr",
+   "page": "Services",
+   "url": "https://keelward.io/fr/services/",
+   "heading": "Tableau de bord clé en main",
+   "text": "Périmètre fixe · 2 à 3 semaines Un tableau de bord en production sur vos données existantes, avec actualisation configurée et formation des responsables."
+  },
+  {
+   "id": "fr-services-144",
+   "lang": "fr",
+   "page": "Services",
+   "url": "https://keelward.io/fr/services/",
+   "heading": "Évaluation de la qualité des données",
+   "text": "Périmètre fixe Profilage de vos tables clés, un tableau de score qualité et une feuille de route de remédiation."
+  },
+  {
+   "id": "fr-services-145",
+   "lang": "fr",
+   "page": "Services",
+   "url": "https://keelward.io/fr/services/",
+   "heading": "Formation et Académie",
+   "text": "Une formation pratique en QA, automatisation et test de l’IA, animée par des praticiens. Idéal pour Entreprises qui forment leurs équipes, personnes en reconversion et testeurs qui passent à l’automatisation. Outils utilisés Playwright Pytest DeepEval Ragas Python GitHub Académie"
+  },
+  {
+   "id": "fr-services-146",
+   "lang": "fr",
+   "page": "Services",
+   "url": "https://keelward.io/fr/services/",
+   "heading": "Ateliers pour équipes en entreprise",
+   "text": "Une formation privée adaptée aux outils de votre équipe, en anglais ou en français."
+  },
+  {
+   "id": "fr-services-147",
+   "lang": "fr",
+   "page": "Services",
+   "url": "https://keelward.io/fr/services/",
+   "heading": "Cours pour les particuliers",
+   "text": "Fondamentaux de la QA, Automatisation des tests, et Test de l’IA et évaluation des LLM."
+  },
+  {
+   "id": "fr-services-148",
+   "lang": "fr",
+   "page": "Services",
+   "url": "https://keelward.io/fr/services/",
+   "heading": "Mentorat individuel",
+   "text": "Coaching de carrière, simulations d’entretien et revue de portfolio. Forfaits de démarrage Exemples de livrables →"
+  },
+  {
+   "id": "fr-services-149",
+   "lang": "fr",
+   "page": "Services",
+   "url": "https://keelward.io/fr/services/",
+   "heading": "Atelier de montée en compétences",
+   "text": "1 à 2 jours Un programme sur mesure, des travaux pratiques et des supports que votre équipe conserve."
+  },
+  {
+   "id": "fr-services-150",
+   "lang": "fr",
+   "page": "Services",
+   "url": "https://keelward.io/fr/services/",
+   "heading": "Cohorte QA Launchpad",
+   "text": "8 semaines Une petite cohorte en direct, avec travail encadré sur de vrais projets et un certificat."
+  },
+  {
+   "id": "fr-services-151",
+   "lang": "fr",
+   "page": "Services",
+   "url": "https://keelward.io/fr/services/",
+   "heading": "Un lancement, une fonctionnalité IA ou une remise à plat de la QA en vue ?",
+   "text": "Parlez-nous de votre projet. Nous vous proposerons la première étape la plus utile. Réserver un échange gratuit Les noms et logos de produits sont des marques de leurs propriétaires respectifs. Leur mention n’implique aucun partenariat ni soutien."
+  },
+  {
+   "id": "fr-about-152",
+   "lang": "fr",
+   "page": "À propos",
+   "url": "https://keelward.io/fr/about/",
+   "heading": "L’origine du nom",
+   "text": "La quille (keel) est la colonne vertébrale qui court sous la coque d’un navire. Elle le stabilise, l’empêche de dériver et lui permet de remonter au vent. Le suffixe « -ward » signifie « vers », comme dans forward (en avant). Ensemble, Keelward signifie avancer sur un cap stable. C’est ce que nous faisons pour nos clients : rendre leurs logiciels, leur IA et leurs données stables et fiables, pour qu’ils avancent en toute confiance. Notre mission Aider les entreprises en croissance à livrer des logiciels et une IA dignes de confiance, et aider chacun à bâtir une vraie carrière dans l’ingénierie qualité."
+  },
+  {
+   "id": "fr-about-153",
+   "lang": "fr",
+   "page": "À propos",
+   "url": "https://keelward.io/fr/about/",
+   "heading": "Notre organisation",
+   "text": "Votre équipe Un seul interlocuteur Responsable senior Cadre, revoit et valide chaque livrable Spécialistes aux États-Unis Spécialistes à l’international Diplômés de l’Académie"
+  },
+  {
+   "id": "fr-about-154",
+   "lang": "fr",
+   "page": "À propos",
+   "url": "https://keelward.io/fr/about/",
+   "heading": "Un responsable unique",
+   "text": "Chaque mission est cadrée, revue et validée par un ingénieur senior, pour garder un haut niveau de qualité même quand l’équipe grandit."
+  },
+  {
+   "id": "fr-about-155",
+   "lang": "fr",
+   "page": "À propos",
+   "url": "https://keelward.io/fr/about/",
+   "heading": "Un réseau de réalisation flexible",
+   "text": "Des spécialistes sélectionnés, aux États-Unis et à l’international, rejoignent les projets au besoin : l’équipe s’adapte à votre charge."
+  },
+  {
+   "id": "fr-about-156",
+   "lang": "fr",
+   "page": "À propos",
+   "url": "https://keelward.io/fr/about/",
+   "heading": "Des diplômés de l’Académie",
+   "text": "Des ingénieurs formés à nos méthodes interviennent sous revue senior, pour une qualité et des pratiques homogènes."
+  },
+  {
+   "id": "fr-about-157",
+   "lang": "fr",
+   "page": "À propos",
+   "url": "https://keelward.io/fr/about/",
+   "heading": "Indépendance",
+   "text": "Nous rapportons ce que nous constatons, clairement et honnêtement, même quand la réponse est « pas encore prêt »."
+  },
+  {
+   "id": "fr-about-158",
+   "lang": "fr",
+   "page": "À propos",
+   "url": "https://keelward.io/fr/about/",
+   "heading": "Clarté",
+   "text": "Un langage simple, des périmètres fixes et des résultats écrits que toute votre équipe peut exploiter."
+  },
+  {
+   "id": "fr-about-159",
+   "lang": "fr",
+   "page": "À propos",
+   "url": "https://keelward.io/fr/about/",
+   "heading": "Valeur durable",
+   "text": "Nous laissons derrière nous des tests, de la documentation et des compétences que votre équipe continue d’utiliser."
+  },
+  {
+   "id": "fr-about-160",
+   "lang": "fr",
+   "page": "À propos",
+   "url": "https://keelward.io/fr/about/",
+   "heading": "En bref",
+   "text": "Entreprise Keelward LLC Siège Géorgie, États-Unis Langues Anglais et français Clients États-Unis et international"
+  },
+  {
+   "id": "fr-academy-161",
+   "lang": "fr",
+   "page": "Académie Keelward",
+   "url": "https://keelward.io/fr/academy/",
+   "heading": "Apprendre à tester comme le font les vraies équipes",
+   "text": "Cours, mentorat et ateliers d’équipe animés par des praticiens. Les étudiants pratiquent sur de vrais projets, avec encadrement, en anglais ou en français."
+  },
+  {
+   "id": "fr-academy-162",
+   "lang": "fr",
+   "page": "Académie Keelward",
+   "url": "https://keelward.io/fr/academy/",
+   "heading": "Fondamentaux de la QA",
+   "text": "Comment les logiciels sont testés dans de vraies équipes : cycle de vie des tests, cas de test, rapports d’anomalies et traçabilité. Intermédiaire"
+  },
+  {
+   "id": "fr-academy-163",
+   "lang": "fr",
+   "page": "Académie Keelward",
+   "url": "https://keelward.io/fr/academy/",
+   "heading": "Automatisation des tests",
+   "text": "Python pour les testeurs, Playwright, Pytest, tests d’API et pipelines CI avec GitHub Actions. Avancé"
+  },
+  {
+   "id": "fr-academy-164",
+   "lang": "fr",
+   "page": "Académie Keelward",
+   "url": "https://keelward.io/fr/academy/",
+   "heading": "Test de l’IA et évaluation des LLM",
+   "text": "Comment les LLM échouent et comment le mesurer, évaluation RAG avec Ragas et DeepEval, et un projet final encadré sur un vrai chatbot."
+  },
+  {
+   "id": "fr-academy-165",
+   "lang": "fr",
+   "page": "Académie Keelward",
+   "url": "https://keelward.io/fr/academy/",
+   "heading": "De vrais projets, avec encadrement",
+   "text": "Nos étudiants travaillent sur de vraies tâches de projet aux côtés d’ingénieurs expérimentés. Les missions client ne sont utilisées qu’avec l’accord du client, sous accord de confidentialité signé et avec des données anonymisées si nécessaire. Les meilleurs diplômés peuvent être invités à rejoindre notre réseau de réalisation rémunéré. Débutant Fondamentaux de la QA Intermédiaire Automatisation des tests Avancé Test de l’IA et évaluation des LLM Pratique Projet réel encadré Sur sélection Réseau de réalisation Keelward"
+  },
+  {
+   "id": "fr-academy-166",
+   "lang": "fr",
+   "page": "Académie Keelward",
+   "url": "https://keelward.io/fr/academy/",
+   "heading": "Cohortes en direct",
+   "text": "Petits groupes, sessions en direct, retours hebdomadaires et un portfolio de vrais livrables."
+  },
+  {
+   "id": "fr-academy-167",
+   "lang": "fr",
+   "page": "Académie Keelward",
+   "url": "https://keelward.io/fr/academy/",
+   "heading": "Mentorat individuel",
+   "text": "Revue du CV et du profil LinkedIn, simulations d’entretien et plan de recherche d’emploi."
+  },
+  {
+   "id": "fr-academy-168",
+   "lang": "fr",
+   "page": "Académie Keelward",
+   "url": "https://keelward.io/fr/academy/",
+   "heading": "Ateliers en entreprise",
+   "text": "Une ou deux journées de formation ciblée sur les outils de votre équipe, en anglais ou en français."
+  },
+  {
+   "id": "fr-academy-169",
+   "lang": "fr",
+   "page": "Académie Keelward",
+   "url": "https://keelward.io/fr/academy/",
+   "heading": "Un cours ou un atelier d’équipe vous intéresse ?",
+   "text": "Dites-nous vos objectifs et votre niveau actuel. Nous vous orienterons vers le bon parcours. Se renseigner sur l’Académie"
+  },
+  {
+   "id": "fr-contact-170",
+   "lang": "fr",
+   "page": "Contact",
+   "url": "https://keelward.io/fr/contact/",
+   "heading": "Parlons de votre projet",
+   "text": "Envoyez-nous quelques lignes sur votre projet ou vos objectifs. Nous répondons en français ou en anglais. E-mail contact@keelward.io Nous répondons sous un jour ouvré. Localisation Géorgie, États-Unis · Avec des clients aux États-Unis et à l’international"
+  },
+  {
+   "id": "fr-contact-171",
+   "lang": "fr",
+   "page": "Contact",
+   "url": "https://keelward.io/fr/contact/",
+   "heading": "La suite",
+   "text": "Nous lisons votre message et vous posons quelques questions si besoin. Nous organisons un court échange pour comprendre vos objectifs. Vous recevez une proposition écrite : périmètre, délai et prix."
+  },
+  {
+   "id": "fr-privacy-172",
+   "lang": "fr",
+   "page": "Confidentialité",
+   "url": "https://keelward.io/fr/privacy/",
+   "heading": "Ce que ce site collecte",
+   "text": "Ce site n’utilise ni cookies, ni outils d’analyse, ni scripts de suivi. Les seules informations enregistrées sont celles que vous envoyez via le formulaire de contact."
+  },
+  {
+   "id": "fr-privacy-173",
+   "lang": "fr",
+   "page": "Confidentialité",
+   "url": "https://keelward.io/fr/privacy/",
+   "heading": "Le formulaire de contact",
+   "text": "Lorsque vous envoyez le formulaire, nous enregistrons votre nom, votre e-mail, votre entreprise et votre téléphone (facultatifs), le sujet et le message dans notre base de données sur Google Cloud (États-Unis), avec une empreinte courte et irréversible de votre adresse réseau pour bloquer le spam. Seule l’équipe Keelward peut les lire. Nous les utilisons uniquement pour vous répondre et les supprimons sous 24 mois, ou plus tôt sur demande."
+  },
+  {
+   "id": "fr-privacy-174",
+   "lang": "fr",
+   "page": "Confidentialité",
+   "url": "https://keelward.io/fr/privacy/",
+   "heading": "Quand vous nous écrivez",
+   "text": "Si vous écrivez à Keelward LLC, nous utilisons votre message et vos coordonnées uniquement pour vous répondre et traiter votre demande. Nous ne les vendons ni ne les partageons à des fins marketing."
+  },
+  {
+   "id": "fr-privacy-175",
+   "lang": "fr",
+   "page": "Confidentialité",
+   "url": "https://keelward.io/fr/privacy/",
+   "heading": "Vos choix",
+   "text": "Vous pouvez nous demander à tout moment de consulter, corriger ou supprimer les informations que vous nous avez envoyées."
+  },
+  {
+   "id": "fr-privacy-176",
+   "lang": "fr",
+   "page": "Confidentialité",
+   "url": "https://keelward.io/fr/privacy/",
+   "heading": "Hébergement",
+   "text": "Le site est hébergé sur Google Firebase Hosting, qui peut conserver des journaux techniques standard, comme les adresses IP, pour diffuser et sécuriser le site."
+  },
+  {
+   "id": "fr-privacy-177",
+   "lang": "fr",
+   "page": "Confidentialité",
+   "url": "https://keelward.io/fr/privacy/",
+   "heading": "Contact",
+   "text": "Vos questions sur la confidentialité peuvent être envoyées à contact@keelward.io."
+  },
+  {
+   "id": "fr-readiness-178",
+   "lang": "fr",
+   "page": "Diagnostic de mise en production",
+   "url": "https://keelward.io/fr/readiness/",
+   "heading": "Votre prochaine version est-elle prête ?",
+   "text": "Répondez à 8 questions rapides sur la façon dont votre équipe teste et livre. Vous obtenez un score et la prochaine étape la plus utile. Rien de ce que vous saisissez n’est enregistré ni envoyé. Score de préparation – /100 Répondez à toutes les questions pour voir votre résultat."
+  },
+  {
+   "id": "fr-work-179",
+   "lang": "fr",
+   "page": "Exemples de livrables",
+   "url": "https://keelward.io/fr/work/",
+   "heading": "Voyez ce que vous recevez",
+   "text": "Chaque mission se termine par un livrable écrit que toute votre équipe peut exploiter. Voici trois exemples, avec des entreprises fictives et des données d’illustration."
+  },
+  {
+   "id": "fr-work-180",
+   "lang": "fr",
+   "page": "Exemples de livrables",
+   "url": "https://keelward.io/fr/work/",
+   "heading": "Bilan de santé QA",
+   "text": "Un examen de deux semaines de vos pratiques de test, avec vos principaux risques et un plan sur 90 jours. Ce que vous recevez Score de préparation et synthèse pour la direction Risques classés par gravité, avec correctifs Couverture de test par parcours Plan d’action sur 90 jours Voir le service Bilan de santé QA Exemple · données fictives Boutique en ligne fictive 62 Score de préparation Bases correctes, risque élevé sur le paiement Principaux risques Élevé Aucun test de régression automatisé sur le paiement Élevé Données de test copiées depuis la production Moyen Anomalies sans gravité ni responsable Couverture automatisée par parcours Paiement 35% Comptes 60% Recherche 72% Back-office 20% Plan sur 90 jours S1–4 Tests de paiement automatisés dans la CI S5–8 Données de test synthétiques S9–12 Triage et validation des anomalies"
+  },
+  {
+   "id": "fr-work-181",
+   "lang": "fr",
+   "page": "Exemples de livrables",
+   "url": "https://keelward.io/fr/work/",
+   "heading": "Audit qualité de chatbot IA",
+   "text": "Une évaluation notée de votre assistant sur des centaines de scénarios, avec une liste de correctifs priorisés. Ce que vous recevez Tableau de score par métrique, avec seuils Exemples d’échecs réels, expliqués Correctifs priorisés Jeu d’évaluation réutilisable Voir le service Audit qualité de chatbot IA Exemple · données fictives Assistant support fictif (RAG) Pas encore prêt : 2 métriques sous le seuil Résultats sur 420 scénarios Exactitude des réponses 81% ≥ 90% Fidélité aux sources 88% ≥ 85% Taux d’hallucination 7% ≤ 3% Refus appropriés 92% ≥ 90% Ton et politique 96% ≥ 95% À corriger avant le lancement 01 Invente des délais de remboursement absents de la base 02 Mauvaise source citée pour les questions de garantie 03 Répond hors périmètre sur les conseils juridiques"
+  },
+  {
+   "id": "fr-work-182",
+   "lang": "fr",
+   "page": "Exemples de livrables",
+   "url": "https://keelward.io/fr/work/",
+   "heading": "Évaluation de la qualité des données",
+   "text": "Le profilage de vos tables clés, un tableau de score qualité et une feuille de route de remédiation. Ce que vous recevez Score qualité par dimension Tables et colonnes à problème Contrôles automatisés recommandés Feuille de route de remédiation Voir le service Évaluation de la qualité des données Exemple · données fictives Entrepôt de données ventes fictif 92 Score qualité global Score par dimension 97% Complétude 91% Validité 99% Unicité 84% Fraîcheur 88% Cohérence Problèmes principaux orders.region Valeurs vides sur 6 % des lignes customers.email Formats invalides daily_sales Chargement en retard 3 jours sur 30 Ces exemples utilisent des entreprises fictives et des données d’illustration. Ils montrent la forme de nos livrables, pas les résultats d’un client réel."
+  },
+  {
+   "id": "fr-work-183",
+   "lang": "fr",
+   "page": "Exemples de livrables",
+   "url": "https://keelward.io/fr/work/",
+   "heading": "Vous voulez le même pour votre produit ?",
+   "text": "Dites-nous ce que vous livrez. Nous vous proposerons le plus petit premier pas utile. Réserver une consultation gratuite"
+  },
+  {
+   "id": "fr-explore-184",
+   "lang": "fr",
+   "page": "Explorer",
+   "url": "https://keelward.io/fr/explore/",
+   "heading": "Explorez tout ce que nous faisons",
+   "text": "Chaque point est un service, un forfait ou une formation. Cliquez pour en savoir plus et voyez comment tout est relié. Cliquez sur un point pour en savoir plus · glissez pour déplacer · molette ou pincement pour zoomer"
+  }
+ ]
+}
