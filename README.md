@@ -12,7 +12,9 @@ screenshot as it happens.
 | `suites/web_shop` | [Sauce Demo](https://www.saucedemo.com), a practice online store | pytest, Playwright | `stable` (normal account) · `regression` (the site's built-in "problem" account, which behaves like a release shipped with defects) |
 | `suites/booking_api` | [Restful-Booker](https://restful-booker.herokuapp.com), a practice hotel-booking API | pytest, requests, jsonschema | `smoke` (happy path) · `full` (adds negative, validation and contract tests) |
 
-Both are public practice applications built for training testers. Keelward is not affiliated with them;
+| `suites/performance` | Harbor & Co shop API (`apps/shop_api.py`), started next to the test | pytest, Locust | `good` (connection pool, cache) · `regressed` (one shared database connection) |
+
+The web and API suites use public practice applications built for training testers. Keelward is not affiliated with them;
 their deliberate defects are part of those sites.
 
 ## AI assurance
@@ -90,6 +92,8 @@ pytest suites/booking_api -m smoke
 
 ## What the demos find
 
+- **Performance, regressed release:** fine with 10 shoppers, but at 50 the 95th percentile passes 400 ms, at 100
+  requests time out, and capacity stops at about 60 requests a second. It recovers once the rush is over.
 - **Data, regressed release:** a re-delivered file doubles a day's revenue, a renamed column empties a whole
   day's prices, orders for new products disappear in a join, and evening orders move to the next day.
 
