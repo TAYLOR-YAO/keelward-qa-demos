@@ -111,7 +111,7 @@ def main():
         subprocess.run([*base, "--collect-only", "-p", "no:cacheprovider"], cwd=HERE, env={**env, "KL_ANNOUNCE": "1"},
                        check=True, timeout=60, stdout=subprocess.DEVNULL)
         junit, html = RESULTS / "junit.xml", RESULTS / "report.html"
-        workers = str(max(2, len(browsers))) if browsers else ("3" if suite in ("web", "rag") else "2")
+        workers = str(max(2, len(browsers))) if browsers else ("4" if suite == "rag" else "3" if suite == "web" else "2")
         dist = ["--dist", "loadgroup"] if browsers else []
         proc = subprocess.run([*base, "-n", workers, *dist, f"--junitxml={junit}", f"--html={html}", "--self-contained-html",
                                "-p", "no:cacheprovider"], cwd=HERE, env=env, timeout=TIME_LIMIT * (2 if deep else 1))

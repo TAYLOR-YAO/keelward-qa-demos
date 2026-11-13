@@ -40,7 +40,7 @@ def _record(model, usage, ms, purpose):
     return row
 
 
-def generate(contents, *, system=None, model=None, temperature=0.0, schema=None, step=None, purpose="app", max_tokens=1024):
+def generate(contents, *, system=None, model=None, temperature=0.0, schema=None, step=None, purpose="app", max_tokens=1024, thinking="minimal"):
     """Text (or a JSON object when `schema` is a pydantic model or JSON schema) from Gemini, with retries."""
     from google.genai import types
 
@@ -52,7 +52,7 @@ def generate(contents, *, system=None, model=None, temperature=0.0, schema=None,
     if "2.5" in model:
         config.thinking_config = types.ThinkingConfig(thinking_budget=0)  # fast, cheap, repeatable
     elif model.startswith("gemini-3"):
-        config.thinking_config = types.ThinkingConfig(thinking_level="low")
+        config.thinking_config = types.ThinkingConfig(thinking_level=thinking)
     last = None
     for attempt in range(4):
         start = time.monotonic()
@@ -101,8 +101,16 @@ class Judge:
                 return JUDGE_MODEL
 
             def generate(self, prompt, schema=None, **kw):
-                text = generate(prompt, model=JUDGE_MODEL, schema=schema, step=self.step, purpose="judge", max_tokens=2048)
-                return schema.model_validate_json(text) if schema is not None else text
+                for attempt in range(2):
+                    text = generate(prompt, model=JUDGE_MODEL, schema=schema, step=self.step, purpose="judge",
+                                    max_tokens=8192, thinking="low")
+                    if schema is None:
+                        return text
+                    try:
+                        return schema.model_validate_json(text)
+                    except ValueError:  # an incomplete reply from the judge: ask once more
+                        if attempt:
+                            raise
 
             async def a_generate(self, prompt, schema=None, **kw):
                 return self.generate(prompt, schema)
