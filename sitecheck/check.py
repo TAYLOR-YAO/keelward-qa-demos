@@ -126,11 +126,30 @@ PAGE_JS = """() => {
 MOBILE_JS = """() => {
   const W = document.documentElement.clientWidth;
   const overflow = document.documentElement.scrollWidth - W;
-  let small = 0, tiny = 0, examples = [];
-  for (const el of document.querySelectorAll('a[href], button, input:not([type=hidden]), select, textarea, [role=button]')) {
+  let small = 0, tiny = 0, examples = [], tinyExamples = [];
+  const targets = [];
+  for (const el of document.querySelectorAll('a[href], button, summary, input:not([type=hidden]), select, textarea, [role=button]')) {
     const r = el.getBoundingClientRect(), s = getComputedStyle(el);
-    if (!r.width || !r.height || s.visibility === 'hidden' || s.display === 'none') continue;
-    if (r.width < 24 || r.height < 24) { small++; if (examples.length < 3) examples.push((el.innerText || el.getAttribute('aria-label') || el.tagName).trim().slice(0, 40)); }
+    if (!r.width || !r.height || r.right <= 0 || r.left >= W || r.bottom <= 0) continue;  // hidden or off-screen
+    if (el.checkVisibility && !el.checkVisibility({ checkOpacity: true, checkVisibilityCSS: true })) continue;
+    if (el.closest('[hidden], [inert], [aria-hidden="true"], dialog:not([open])')) continue;
+    const closed = el.closest('details:not([open])');
+    if (closed && el.tagName !== 'SUMMARY') continue;
+    // WCAG 2.5.8 exempts links inside a sentence or paragraph.
+    if (el.tagName === 'A' && s.display === 'inline' && el.parentElement && (el.parentElement.textContent || '').trim().length > (el.textContent || '').trim().length + 15) continue;
+    targets.push({ el, r, small: r.width < 24 || r.height < 24 });
+  }
+  // WCAG 2.5.8 spacing exception: a small target passes when a 24 px circle around its centre touches no other target.
+  for (const t of targets) {
+    if (!t.small) continue;
+    const cx = t.r.left + t.r.width / 2, cy = t.r.top + t.r.height / 2;
+    const crowded = targets.some((o) => {
+      if (o === t || o.el.contains(t.el) || t.el.contains(o.el)) return false;
+      if (o.small) return Math.hypot(cx - (o.r.left + o.r.width / 2), cy - (o.r.top + o.r.height / 2)) < 24;
+      const dx = Math.max(o.r.left - cx, 0, cx - o.r.right), dy = Math.max(o.r.top - cy, 0, cy - o.r.bottom);
+      return Math.hypot(dx, dy) < 12;
+    });
+    if (crowded) { small++; if (examples.length < 3) examples.push((t.el.innerText || t.el.getAttribute('aria-label') || t.el.tagName).trim().slice(0, 40)); }
   }
   const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
   const seen = new Set();
@@ -140,9 +159,9 @@ MOBILE_JS = """() => {
     seen.add(p);
     const fs = parseFloat(getComputedStyle(p).fontSize);
     const r = p.getBoundingClientRect();
-    if (fs < 12 && r.width && r.height) tiny++;
+    if (fs < 11.9 && r.width && r.height && r.right > 0 && r.left < W && !p.closest('[hidden], [aria-hidden="true"], svg')) { tiny++; if (tinyExamples.length < 3) tinyExamples.push(walker.currentNode.textContent.trim().slice(0, 30)); }
   }
-  return { width: W, overflow: Math.max(0, overflow), smallTargets: small, smallExamples: examples, tinyText: tiny };
+  return { width: W, overflow: Math.max(0, overflow), smallTargets: small, smallExamples: examples, tinyText: tiny, tinyExamples };
 }"""
 
 
@@ -315,7 +334,7 @@ def mobile(m, info):
         item("viewport", "good" if "width=device-width" in vp.replace(" ", "") else "bad", value=vp[:120]),
         item("overflow", "good" if m["overflow"] <= 2 else "bad", value=m["overflow"], width=m["width"]),
         item("tap-targets", "good" if m["smallTargets"] == 0 else "warn" if m["smallTargets"] <= 5 else "bad", value=m["smallTargets"], examples=m["smallExamples"]),
-        item("text-size", "good" if m["tinyText"] == 0 else "warn" if m["tinyText"] <= 5 else "bad", value=m["tinyText"]),
+        item("text-size", "good" if m["tinyText"] == 0 else "warn" if m["tinyText"] <= 5 else "bad", value=m["tinyText"], examples=m.get("tinyExamples", [])),
     ]
     return {"items": items}
 
