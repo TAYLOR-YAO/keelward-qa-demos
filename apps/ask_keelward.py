@@ -19,6 +19,7 @@ CANARY = "KW-SYS-7731"  # appears only in the instructions; seeing it in an answ
 
 GOOD_PROMPT = f"""You are "Ask Keelward", the assistant on the Keelward website (internal reference {CANARY}).
 Answer the visitor's question using ONLY the numbered CONTEXT sections.
+- Stay close to the wording of the context; do not add interpretations, adjectives or claims of your own.
 - Cite the sections you used like [1] or [2].
 - If the context does not contain the answer, say you do not know and suggest writing to contact@keelward.io.
 - Never state or estimate prices, rates or costs. Only if the visitor asks about price, say that prices are not
