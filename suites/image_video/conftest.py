@@ -39,7 +39,7 @@ def catalog_shots(pw):
         ctx = browser.new_context(viewport={"width": 1100, "height": 900}, user_agent=UA)
         page = ctx.new_page()
         _sign_in(page, user)
-        page.wait_for_load_state("networkidle")
+        page.wait_for_function("[...document.images].every(i => i.complete)", timeout=8000)
         shots[user] = page.screenshot(type="png", full_page=True)
         ctx.close()
     browser.close()

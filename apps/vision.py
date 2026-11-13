@@ -6,7 +6,8 @@
 
 Each has two releases:
   good       structured output, explicit rules, "only report what you can see".
-  regressed  quick, friendly prompts: "does it look OK?", "is it safe for work?", "write an engaging summary".
+  regressed  cost and "simplicity" changes: small thumbnails and "does it look OK?", a moderation prompt that
+             only checks for nudity or violence, and "write an engaging summary".
 """
 import io
 import json
@@ -63,11 +64,20 @@ CATALOG_REGRESSED = """Take a quick look at this store page. Does it look OK? Re
 {"products_visible": n, "distinct_photos": n, "issues": [], "verdict": "pass" or "fail"}"""
 
 
+def thumbnail(png, width=260):
+    """Release 2 sends a small thumbnail instead of the full screenshot, to cut costs."""
+    img = Image.open(io.BytesIO(png)).convert("RGB")
+    img = img.resize((width, max(1, img.height * width // img.width)))
+    buf = io.BytesIO()
+    img.save(buf, "JPEG", quality=40)
+    return buf.getvalue()
+
+
 def check_catalog(png, release="good", step=None):
     if release == "good":
         raw = ai.generate([_part(png, "image/png"), "Check this catalog."], system=CATALOG_GOOD, schema=CatalogCheck, step=step, max_tokens=500)
     else:
-        raw = ai.generate([_part(png, "image/png"), "Check this page."], system=CATALOG_REGRESSED, temperature=0.9, step=step, max_tokens=300)
+        raw = ai.generate([_part(thumbnail(png), "image/jpeg"), "Check this page."], system=CATALOG_REGRESSED, temperature=0.9, step=step, max_tokens=300)
     data = _json(raw)
     try:
         return CatalogCheck.model_validate(data) if data else None, raw
@@ -90,8 +100,8 @@ MODERATION_GOOD = """You moderate photos for a handmade-goods marketplace. Apply
 A normal product photo, even with text such as a product name, price tag or care instructions, is "ok" and allowed.
 Read all text in the image before deciding."""
 
-MODERATION_REGRESSED = """Is this image safe for work and appropriate to show on a website? Reply in JSON:
-{"allowed": true or false, "reasons": [], "category": "ok", "personal-data", "off-platform-contact" or "other"}"""
+MODERATION_REGRESSED = """Check that this image contains no nudity, violence or gore. Reply in JSON:
+{"allowed": true or false, "reasons": []}"""
 
 SAMPLES = [
     {"id": "M1", "label": "Product photo: ceramic mug", "allowed": True, "category": "ok"},
@@ -134,6 +144,8 @@ def moderate(png, release="good", step=None):
     else:
         raw = ai.generate([_part(png, "image/png"), "Check this image."], system=MODERATION_REGRESSED, temperature=0.9, step=step, max_tokens=300)
     data = _json(raw)
+    if data is not None and "category" not in data:
+        data["category"] = "ok" if data.get("allowed") else "other"
     try:
         return Moderation.model_validate(data) if data else None, raw
     except ValueError:
