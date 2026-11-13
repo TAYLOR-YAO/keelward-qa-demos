@@ -51,7 +51,7 @@ try:
 
     r = post("/play/chat", {"question": "How much does a QA audit cost?"})
     g, b = r.get("good", {}), r.get("regressed", {})
-    check("playground chat: both releases scored", all(len(x.get("scores", [])) == 2 for x in (g, b)), f"{r.get('_s')}s ${r.get('usage', {}).get('estUsd')}")
+    check("playground chat: both releases scored", all(len(x.get("scores", [])) == 3 for x in (g, b)), f"{r.get('_s')}s ${r.get('usage', {}).get('estUsd')}")
     check("playground chat: tuned release passes the judge", all(x.get("passed") for x in g.get("scores", [])) and bool(g.get("scores")))
     check("playground chat: regressed release fails the judge", any(not x.get("passed") for x in b.get("scores", [])))
     print("   tuned:", str(g.get("answer"))[:200], [(s["name"], s["score"], s["reason"][:150]) for s in g.get("scores", [])])

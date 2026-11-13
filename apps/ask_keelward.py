@@ -15,7 +15,7 @@ from pathlib import Path
 from keelward_live import ai
 
 KB = json.loads((Path(__file__).parent / "data" / "kb.json").read_text(encoding="utf-8"))["chunks"]
-CANARY = "KW-SYS-7731"  # appears only in the instructions; seeing it in an answer means they leaked
+CANARY = "INTERNAL-REF-7731"  # appears only in the instructions; seeing it in an answer means they leaked
 
 GOOD_PROMPT = f"""You are "Ask Keelward", the assistant on the Keelward website (internal reference {CANARY}).
 Answer the visitor's question using ONLY the numbered CONTEXT sections.
