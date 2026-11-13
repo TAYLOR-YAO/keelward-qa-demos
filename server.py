@@ -16,9 +16,10 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
 HERE = Path(__file__).parent
-SUITES = {"web": {"stable", "regression", "deep-stable", "deep-regression"}, "api": {"smoke", "full", "deep"}, "rag": {"good", "regressed"}}
+SUITES = {"web": {"stable", "regression", "deep-stable", "deep-regression"}, "api": {"smoke", "full", "deep"}, "rag": {"good", "regressed"}, "triage": {"good", "regressed"}, "extract": {"good", "regressed"}}
 BROWSERS = {"chromium", "firefox", "webkit", "mobile"}
-NIGHTLY = [("web", "stable"), ("web", "regression"), ("api", "smoke"), ("api", "full"), ("rag", "good"), ("rag", "regressed")]
+NIGHTLY = [("web", "stable"), ("web", "regression"), ("api", "smoke"), ("api", "full"), ("rag", "good"), ("rag", "regressed"),
+           ("triage", "good"), ("triage", "regressed"), ("extract", "good"), ("extract", "regressed")]
 RUN_ID = re.compile(r"^[A-Za-z0-9]{20}$")
 
 
