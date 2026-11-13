@@ -81,5 +81,5 @@ def ask(question, release="good", step=None):
     cfg = RELEASES[release]
     sources = _INDEX[language(question) if release == "good" else "en"].search(question, cfg["top_k"])
     context = "\n\n".join(f"[{i + 1}] {s['page']} › {s['heading']}\n{s['text']}" for i, s in enumerate(sources))
-    answer = ai.generate(f"CONTEXT\n{context}\n\nQUESTION\n{question}", system=cfg["prompt"], temperature=cfg["temperature"], step=step, max_tokens=500)
+    answer = ai.generate(f"CONTEXT\n{context}\n\nQUESTION\n{question}", system=cfg["prompt"], temperature=cfg["temperature"], step=step, max_tokens=400)
     return {"answer": answer.strip(), "sources": sources, "context": [f"{s['page']} › {s['heading']}: {s['text']}" for s in sources]}

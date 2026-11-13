@@ -21,6 +21,7 @@ def grounded(rid, question, en, fr):
     grounded("AI-02", "How does the Keelward Academy train students?", "How the Academy trains students", "La formation à l’Academy"),
     grounded("AI-03", "What does Keelward do with the data I send through the contact form?", "Use of contact-form data", "Utilisation des données du formulaire"),
 ])
+@pytest.mark.timeout(150)
 def test_grounded_answer(question, chat, judge, step):
     r = chat(question)
     case = LLMTestCase(input=question, actual_output=r["answer"], retrieval_context=r["context"])
