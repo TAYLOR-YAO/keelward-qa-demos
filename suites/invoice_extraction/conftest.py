@@ -21,6 +21,9 @@ def run_extraction(step):
             raws = list(pool.map(lambda inv: extract.extract(inv, RELEASE, step=step), invoices))
         parsed = [extract.parse(r) for r in raws]
         step.raws = raws
+        for inv, raw, p in zip(invoices, raws, parsed):
+            if p is None:
+                step.detail(f"Invoice {inv['id']}: reply could not be read: {raw[:160]}")
         rows, bad = [], []
         for inv, p in zip(invoices, parsed):
             for f in fields:

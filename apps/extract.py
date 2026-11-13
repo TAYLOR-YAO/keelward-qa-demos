@@ -71,6 +71,23 @@ def _number(v):
     return v
 
 
+def _flatten(data):
+    """Maps the loose shapes a free-form reply tends to use onto the expected fields."""
+    out = {}
+    for k in FIELDS:
+        v = data.get(k)
+        if v is None:  # common alternative names
+            v = next((data[a] for a in (k.replace("_", ""), k.replace("invoice_", ""), {"vendor": "seller", "customer": "bill_to"}.get(k, "")) if a in data), None)
+        if isinstance(v, dict):
+            v = v.get("name") or v.get("value") or next(iter(v.values()), None)
+        if k == "line_items" and isinstance(v, list):
+            v = len(v)
+        if k in ("subtotal", "tax", "total"):
+            v = _number(v)
+        out[k] = v
+    return out
+
+
 def parse(raw, strict=False):
     """The extractor's reply as an Invoice, or None when it is not valid (strict: exactly one JSON object)."""
     text = raw.strip()
@@ -80,7 +97,7 @@ def parse(raw, strict=False):
     try:
         data = json.loads(text)
         if not strict and isinstance(data, dict):
-            data = {k: _number(v) if k in ("subtotal", "tax", "total") else v for k, v in data.items()}
+            data = _flatten(data)
         return Invoice.model_validate(data)
     except (ValueError, TypeError):
         return None
