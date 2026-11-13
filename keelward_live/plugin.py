@@ -152,6 +152,7 @@ class Steps:
         self.n = 0
         self._details = None
         self._data = None
+        self._image = None
 
     def detail(self, text):
         if self._details is not None:
@@ -162,6 +163,24 @@ class Steps:
         if self._data is not None:
             for k, v in fields.items():
                 self._data[k] = v[:1500] if isinstance(v, str) else v
+
+    def image(self, data, quality=70):
+        """Attaches an image (PNG or JPEG bytes) to the current step as its evidence, instead of a page screenshot."""
+        if self._details is None:
+            return
+        try:
+            import io
+
+            from PIL import Image
+
+            img = Image.open(io.BytesIO(data)).convert("RGB")
+            if img.width > 1100:
+                img = img.resize((1100, img.height * 1100 // img.width))
+            buf = io.BytesIO()
+            img.save(buf, "JPEG", quality=quality)
+            self._image = buf.getvalue()
+        except Exception as e:
+            print(f"[keelward-live] image not attached: {e}")
 
     def score(self, name, value, threshold, passed, reason=""):
         """An evaluation score with its threshold and the judge's reason."""
@@ -184,6 +203,7 @@ class Steps:
         n, start, ok = self.n, time.monotonic(), True
         self._details = []
         self._data = {}
+        self._image = None
         try:
             yield self
         except BaseException:
@@ -195,7 +215,10 @@ class Steps:
                 step["detail"] = self._details[:6]
             if self._data:
                 step["data"] = self._data
-            shot = self._shot(n)
+            if self._image is not None and self.writer:
+                shot = self.sink.upload(f"{self.key}-{n}.jpg", self._image, "image/jpeg")
+            else:
+                shot = self._shot(n)
             if shot:
                 step["shot"] = shot
             self._details = None
