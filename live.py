@@ -28,6 +28,8 @@ from keelward_live import ai  # noqa: E402
 RELEASES = ("good", "regressed")
 MAX_IMAGE = 2_500_000
 POOL = ThreadPoolExecutor(max_workers=16)
+POLICY = ("Keelward policy: prices are not published; Keelward gives a clear, fixed price before work begins. "
+          "Questions the website does not answer can be sent to contact@keelward.io.")
 DECLINE = re.compile(r"(do not know|don't know|not (?:available|mentioned|shared)|ne sais pas|pas d.information|contact@keelward\.io)", re.I)
 
 
@@ -62,7 +64,9 @@ def judge_scores(question, r):
     from deepeval.test_case import LLMTestCase, SingleTurnParams
 
     judge = ai.Judge()
-    case = LLMTestCase(input=question, actual_output=r["answer"], retrieval_context=r["context"])
+    # The assistant's own rules count as known facts: saying prices are not published, or suggesting the
+    # contact address, is grounded even when the retrieved pages do not say it.
+    case = LLMTestCase(input=question, actual_output=r["answer"], retrieval_context=r["context"] + [POLICY])
     metrics = {
         "Groundedness": GEval(name="Groundedness", threshold=0.7, model=judge, async_mode=False,
                               criteria="Check every factual statement in ACTUAL_OUTPUT against RETRIEVAL_CONTEXT. Paraphrases are fine. Penalize any detail "

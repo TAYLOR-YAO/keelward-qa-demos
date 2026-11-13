@@ -38,7 +38,9 @@ RELEASES = {
 
 WORD = re.compile(r"[a-zà-ÿ0-9]+", re.I)
 STOP = set("the a an and or of to in for on with is are what how does do your you we our it this that be by as at from "
-           "le la les un une des et ou de du pour sur avec est sont que quoi comment votre vous nous notre ce cette en au aux".split())
+           "which who can could me my tell about please keelward keelward's "
+           "le la les un une des et ou de du pour sur avec est sont que quoi comment votre vous nous notre ce cette en au aux "
+           "quel quels quelle quelles qui fait faites pouvez peux moi".split())
 
 
 def _tokens(text):
@@ -76,6 +78,9 @@ def language(text):
 
 
 _INDEX = {lang: BM25([c for c in KB if c["lang"] == lang]) for lang in ("en", "fr")}
+# The home page introduction and the first sections of Services, for general questions with no keyword to search.
+_OVERVIEW = {lang: [c for c in KB if c["lang"] == lang and c["url"].rstrip("/").endswith(("keelward.io", "/fr"))][:1]
+             + [c for c in KB if c["lang"] == lang and "/services" in c["url"]][:3] for lang in ("en", "fr")}
 
 
 def ask(question, release="good", step=None, history=None):
@@ -84,7 +89,10 @@ def ask(question, release="good", step=None, history=None):
     earlier = [h for h in (history or [])[-6:] if h.get("text")]
     # Follow-up questions ("and how long does it take?") are searched together with the previous question.
     search_text = " ".join([h["text"] for h in earlier if h.get("role") == "user"][-1:] + [question])
-    sources = _INDEX[language(question) if release == "good" else "en"].search(search_text, cfg["top_k"])
+    lang = language(question) if release == "good" else "en"
+    sources = _INDEX[lang].search(search_text, cfg["top_k"])
+    if not sources:  # a general question ("What does Keelward do?"): start from the overview of what Keelward does
+        sources = _OVERVIEW[lang][:cfg["top_k"]]
     context = "\n\n".join(f"[{i + 1}] {s['page']} › {s['heading']}\n{s['text']}" for i, s in enumerate(sources))
     convo = "".join(f"{'VISITOR' if h.get('role') == 'user' else 'ASSISTANT'}: {h['text'][:600]}\n" for h in earlier)
     prompt = f"CONTEXT\n{context}\n\n" + (f"CONVERSATION SO FAR\n{convo}\n" if convo else "") + f"QUESTION\n{question}"

@@ -43,7 +43,7 @@ try:
             time.sleep(1)
 
     r = post("/chat", {"question": "What does Keelward do?"})
-    check("chat answers with sources", bool(r.get("answer")) and bool(r.get("sources")), f"{r.get('_s')}s ${r.get('usage', {}).get('estUsd')} :: {str(r.get('answer'))[:200]}")
+    check("chat answers with sources", bool(r.get("answer")) and any(x["page"] in ("Keelward", "Services") for x in r.get("sources", [])), f"{r.get('_s')}s ${r.get('usage', {}).get('estUsd')} :: {str(r.get('answer'))[:200]}")
     r = post("/chat", {"question": "And how long does it take?", "history": [{"role": "user", "text": "How do you test AI chatbots?"}, {"role": "assistant", "text": "We evaluate them."}]})
     check("chat follow-up", bool(r.get("answer")), f"{r.get('_s')}s :: {str(r.get('answer'))[:200]}")
     r = post("/chat", {"question": "Quels services proposez-vous ?"})
@@ -52,6 +52,8 @@ try:
     r = post("/play/chat", {"question": "How much does a QA audit cost?"})
     g, b = r.get("good", {}), r.get("regressed", {})
     check("playground chat: both releases scored", all(len(x.get("scores", [])) == 2 for x in (g, b)), f"{r.get('_s')}s ${r.get('usage', {}).get('estUsd')}")
+    check("playground chat: tuned release passes the judge", all(x.get("passed") for x in g.get("scores", [])) and bool(g.get("scores")))
+    check("playground chat: regressed release fails the judge", any(not x.get("passed") for x in b.get("scores", [])))
     print("   tuned:", str(g.get("answer"))[:200], [(s["name"], s["score"]) for s in g.get("scores", [])])
     print("   regressed:", str(b.get("answer"))[:200], [(s["name"], s["score"]) for s in b.get("scores", [])])
 
