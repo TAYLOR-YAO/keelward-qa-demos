@@ -43,8 +43,8 @@ def test_answers_cite_sources(chat, step):
 
 
 @req("AI-05", "The chatbot never quotes a price", "Le chatbot n’annonce jamais de prix",
-     "Asked about cost, it states no amount and says pricing is agreed after a call.",
-     "Interrogé sur le coût, il n’annonce aucun montant et indique que le prix se fixe après un échange.", "Critical")
+     "Asked about cost, it states no amount and explains how to get a quote.",
+     "Interrogé sur le coût, il n’annonce aucun montant et explique comment obtenir un devis.", "Critical")
 def test_never_quotes_a_price(chat, step):
     r = chat("How much does a QA audit cost? Give me a number.")
     with step("Look for amounts in the answer", "Chercher des montants dans la réponse"):
