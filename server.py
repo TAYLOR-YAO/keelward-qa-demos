@@ -2,6 +2,7 @@
 
 POST /run {"RUN_ID": "...", "SUITE": "web|api", "VARIANT": "...", "BROWSERS": "..."} starts run.py in the
 background and answers 202 straight away; the run reports its own progress.
+POST /check {"CHECK_ID": "...", "URL": "https://..."} starts a free website check (sitecheck/check.py).
 POST /nightly (Cloud Scheduler, once a night) runs the four public demos one after another and adds each
 result to the 30-night trend shown on the website.
 Cloud Run's sign-in check (IAM) decides who may call this; the service is not public.
@@ -37,6 +38,12 @@ class Handler(BaseHTTPRequestHandler):
         self._send(200, {"ok": True})
 
     def do_POST(self):
+        # Requests from inside this container (for example a checked web page trying to call back) are refused:
+        # real requests always arrive through Cloud Run's front end.
+        if self.client_address[0] in ("127.0.0.1", "::1", "localhost"):
+            return self._send(403, {"error": "local"})
+        if self.path == "/check":
+            return self.check()
         if self.path == "/nightly":
             threading.Thread(target=nightly, daemon=True).start()
             return self._send(202, {"started": "nightly"})
@@ -55,8 +62,38 @@ class Handler(BaseHTTPRequestHandler):
         threading.Thread(target=proc.wait, daemon=True).start()  # reap it when it ends
         self._send(202, {"started": run_id})
 
+    def check(self):
+        try:
+            body = json.loads(self.rfile.read(min(int(self.headers.get("Content-Length", 0)), 4000)) or b"{}")
+        except ValueError:
+            return self._send(400, {"error": "json"})
+        check_id, url = str(body.get("CHECK_ID", "")), str(body.get("URL", ""))
+        if not RUN_ID.match(check_id) or not url.startswith(("http://", "https://")) or len(url) > 2000:
+            return self._send(400, {"error": "invalid"})
+        env = {**os.environ, "CHECK_ID": check_id, "URL": url}
+        proc = subprocess.Popen([sys.executable, "-m", "sitecheck.check"], cwd=HERE, env=env)
+
+        def reap():
+            try:
+                proc.wait(timeout=240)
+            except subprocess.TimeoutExpired:  # a page that never settles must not hold the runner
+                proc.kill()
+                mark_failed(check_id, "timeout")
+        threading.Thread(target=reap, daemon=True).start()
+        self._send(202, {"started": check_id})
+
     def log_message(self, fmt, *args):
         print(f"[runner] {self.address_string()} {fmt % args}")
+
+
+def mark_failed(check_id, code):
+    try:
+        from google.cloud import firestore
+
+        db = firestore.Client(project=os.environ.get("GOOGLE_CLOUD_PROJECT", "keelward-web-50bc7"))
+        db.collection("siteChecks").document(check_id).update({"status": "failed", "error": code})
+    except Exception as e:
+        print(f"[runner] could not mark check {check_id} failed: {e}")
 
 
 def nightly():
