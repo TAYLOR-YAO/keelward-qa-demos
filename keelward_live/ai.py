@@ -9,11 +9,11 @@ import time
 from pathlib import Path
 
 PROJECT = os.environ.get("GOOGLE_CLOUD_PROJECT", "keelward-web-50bc7")
-LOCATION = os.environ.get("AI_LOCATION", "us-central1")
-APP_MODEL = os.environ.get("AI_APP_MODEL", "gemini-2.5-flash-lite")
-JUDGE_MODEL = os.environ.get("AI_JUDGE_MODEL", "gemini-2.5-flash")
+LOCATION = os.environ.get("AI_LOCATION", "global")
+APP_MODEL = os.environ.get("AI_APP_MODEL", "gemini-3.1-flash-lite")
+JUDGE_MODEL = os.environ.get("AI_JUDGE_MODEL", "gemini-3.1-flash-lite")
 # List prices per million tokens (input, output), for the usage estimate shown on the website.
-PRICES = {"gemini-2.5-flash-lite": (0.10, 0.40), "gemini-2.5-flash": (0.30, 2.50)}
+PRICES = {"gemini-3.1-flash-lite": (0.25, 1.50), "gemini-3-flash": (0.50, 3.00), "gemini-2.5-flash": (0.30, 2.50), "gemini-2.5-flash-lite": (0.10, 0.40)}
 
 _client = None
 
@@ -51,6 +51,8 @@ def generate(contents, *, system=None, model=None, temperature=0.0, schema=None,
     )
     if "2.5" in model:
         config.thinking_config = types.ThinkingConfig(thinking_budget=0)  # fast, cheap, repeatable
+    elif model.startswith("gemini-3"):
+        config.thinking_config = types.ThinkingConfig(thinking_level="low")
     last = None
     for attempt in range(4):
         start = time.monotonic()
