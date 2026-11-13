@@ -1,0 +1,13 @@
+# Keelward live AI service (Cloud Run): the website assistant and the AI playground. No browsers, small and fast to start.
+FROM python:3.12-slim
+ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 DEEPEVAL_TELEMETRY_OPT_OUT=YES
+WORKDIR /app
+RUN apt-get update && apt-get install -y --no-install-recommends fonts-dejavu-core && rm -rf /var/lib/apt/lists/*
+COPY requirements-live.txt .
+RUN pip install --no-cache-dir -r requirements-live.txt
+COPY keelward_live ./keelward_live
+COPY apps ./apps
+COPY live.py .
+RUN useradd --create-home live && chown -R live /app
+USER live
+CMD ["python", "live.py"]

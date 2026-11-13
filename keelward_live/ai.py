@@ -3,9 +3,11 @@
 Authentication is the runner's own Google Cloud identity; no API key is used. Every call is recorded on
 the current test step (model, tokens, time) and counted for the run's AI usage summary.
 """
+import contextvars
 import json
 import os
 import time
+from contextlib import contextmanager
 from pathlib import Path
 
 PROJECT = os.environ.get("GOOGLE_CLOUD_PROJECT", "keelward-web-50bc7")
@@ -30,13 +32,38 @@ def client():
     return _client
 
 
+_collector = contextvars.ContextVar("ai_usage", default=None)
+
+
+@contextmanager
+def collect():
+    """Collects the usage of every model call made in this context (the live assistant reports it per request)."""
+    rows = []
+    token = _collector.set(rows)
+    try:
+        yield rows
+    finally:
+        _collector.reset(token)
+
+
+def cost(rows):
+    usd = 0.0
+    for r in rows:
+        pin, pout = PRICES.get(r["model"], (0.3, 2.5))
+        usd += r["in"] / 1e6 * pin + r["out"] / 1e6 * pout
+    return {"calls": len(rows), "inputTokens": sum(r["in"] for r in rows), "outputTokens": sum(r["out"] for r in rows), "estUsd": round(usd, 5)}
+
+
 def _record(model, usage, ms, purpose):
-    out = os.environ.get("RESULTS_DIR")
-    if not out:
-        return
     row = {"model": model, "in": getattr(usage, "prompt_token_count", 0) or 0,
            "out": (getattr(usage, "candidates_token_count", 0) or 0) + (getattr(usage, "thoughts_token_count", 0) or 0),
            "ms": ms, "purpose": purpose}
+    rows = _collector.get()
+    if rows is not None:
+        rows.append(row)
+    out = os.environ.get("RESULTS_DIR")
+    if not out:
+        return row
     Path(out).mkdir(parents=True, exist_ok=True)
     with open(Path(out) / f"ai-{os.getpid()}.jsonl", "a", encoding="utf-8") as f:
         f.write(json.dumps(row) + "\n")

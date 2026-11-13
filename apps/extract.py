@@ -43,6 +43,10 @@ is complete."""
 
 
 def _contents(inv):
+    if inv["kind"] == "upload":  # playground: an image the visitor uploaded (kept in memory only)
+        from google.genai import types
+
+        return [types.Part.from_bytes(data=inv["data"], mime_type=inv["mime"]), "Extract this invoice."]
     if inv["kind"] == "image":
         from google.genai import types
 

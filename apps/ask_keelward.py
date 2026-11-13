@@ -78,9 +78,15 @@ def language(text):
 _INDEX = {lang: BM25([c for c in KB if c["lang"] == lang]) for lang in ("en", "fr")}
 
 
-def ask(question, release="good", step=None):
+def ask(question, release="good", step=None, history=None):
+    """Answers a question. `history` (live assistant only) is the earlier turns: [{"role": "user"|"assistant", "text": ...}]."""
     cfg = RELEASES[release]
-    sources = _INDEX[language(question) if release == "good" else "en"].search(question, cfg["top_k"])
+    earlier = [h for h in (history or [])[-6:] if h.get("text")]
+    # Follow-up questions ("and how long does it take?") are searched together with the previous question.
+    search_text = " ".join([h["text"] for h in earlier if h.get("role") == "user"][-1:] + [question])
+    sources = _INDEX[language(question) if release == "good" else "en"].search(search_text, cfg["top_k"])
     context = "\n\n".join(f"[{i + 1}] {s['page']} › {s['heading']}\n{s['text']}" for i, s in enumerate(sources))
-    answer = ai.generate(f"CONTEXT\n{context}\n\nQUESTION\n{question}", system=cfg["prompt"], temperature=cfg["temperature"], step=step, max_tokens=400)
+    convo = "".join(f"{'VISITOR' if h.get('role') == 'user' else 'ASSISTANT'}: {h['text'][:600]}\n" for h in earlier)
+    prompt = f"CONTEXT\n{context}\n\n" + (f"CONVERSATION SO FAR\n{convo}\n" if convo else "") + f"QUESTION\n{question}"
+    answer = ai.generate(prompt, system=cfg["prompt"], temperature=cfg["temperature"], step=step, max_tokens=400)
     return {"answer": answer.strip(), "sources": sources, "context": [f"{s['page']} › {s['heading']}: {s['text']}" for s in sources]}

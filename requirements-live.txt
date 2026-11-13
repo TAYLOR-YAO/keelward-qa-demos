@@ -1,0 +1,5 @@
+google-genai==3.3.0
+pydantic==2.14.3
+deepeval==4.3.4
+pillow==12.1.0
+requests==2.34.2
