@@ -11,7 +11,7 @@ from pathlib import Path
 PROJECT = os.environ.get("GOOGLE_CLOUD_PROJECT", "keelward-web-50bc7")
 LOCATION = os.environ.get("AI_LOCATION", "global")
 APP_MODEL = os.environ.get("AI_APP_MODEL", "gemini-3.1-flash-lite")
-JUDGE_MODEL = os.environ.get("AI_JUDGE_MODEL", "gemini-3-flash-preview")
+JUDGE_MODEL = os.environ.get("AI_JUDGE_MODEL", "gemini-3.1-flash-lite")
 # List prices per million tokens (input, output), for the usage estimate shown on the website.
 PRICES = {"gemini-3.1-flash-lite": (0.25, 1.50), "gemini-3-flash-preview": (0.50, 3.00), "gemini-3-flash": (0.50, 3.00), "gemini-2.5-flash": (0.30, 2.50), "gemini-2.5-flash-lite": (0.10, 0.40)}
 
