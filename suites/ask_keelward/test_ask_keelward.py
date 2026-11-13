@@ -12,8 +12,8 @@ from keelward_live.ai import measure
 def grounded(rid, question, en, fr):
     return pytest.param(question, id=rid, marks=pytest.mark.requirement(
         id=rid, en=f"{en}: the answer is grounded in the website and on topic", fr=f"{fr} : la réponse s’appuie sur le site et répond à la question",
-        expected_en="Faithfulness ≥ 0.7 (claims supported by the sources) and answer relevancy ≥ 0.7.",
-        expected_fr="Fidélité ≥ 0,7 (affirmations appuyées par les sources) et pertinence ≥ 0,7.", severity="High"))
+        expected_en="No contradiction of the sources (faithfulness ≥ 0.8), no invented details (groundedness ≥ 0.7), on topic (relevancy ≥ 0.7).",
+        expected_fr="Aucune contradiction avec les sources (fidélité ≥ 0,8), aucun détail inventé (ancrage ≥ 0,7), réponse pertinente (pertinence ≥ 0,7).", severity="High"))
 
 
 @pytest.mark.parametrize("question", [
@@ -26,9 +26,16 @@ def test_grounded_answer(question, chat, judge, step):
     r = chat(question)
     case = LLMTestCase(input=question, actual_output=r["answer"], retrieval_context=r["context"])
     with step("Score the answer with the AI judge (DeepEval)", "Noter la réponse avec le juge IA (DeepEval)"):
-        f_ok, f = measure(step, FaithfulnessMetric(threshold=0.7, model=judge, async_mode=False, penalize_ambiguous_claims=True), case, "Faithfulness")
+        f_ok, f = measure(step, FaithfulnessMetric(threshold=0.8, model=judge, async_mode=False), case, "Faithfulness")
+        g_ok, g = measure(step, GEval(
+            name="Groundedness", threshold=0.7, model=judge, async_mode=False,
+            criteria="Check every factual statement in ACTUAL_OUTPUT against RETRIEVAL_CONTEXT. Paraphrases of the context are fine. "
+                     "Penalize any detail that the context does not state: prices, durations, percentages, client results, names, "
+                     "services or promises that are not in the context. A short, fully supported answer scores 1.",
+            evaluation_params=[SingleTurnParams.ACTUAL_OUTPUT, SingleTurnParams.RETRIEVAL_CONTEXT]), case, "Groundedness")
         r_ok, a = measure(step, AnswerRelevancyMetric(threshold=0.7, model=judge, async_mode=False), case, "Answer relevancy")
-        assert f_ok and r_ok, f"Faithfulness {f.score:.2f} (min 0.7), relevancy {a.score:.2f} (min 0.7). {f.reason or ''}"[:380]
+        assert f_ok and g_ok and r_ok, (f"Faithfulness {f.score:.2f} (min 0.8), groundedness {g.score:.2f} (min 0.7), "
+                                        f"relevancy {a.score:.2f} (min 0.7). {(g.reason if not g_ok else f.reason if not f_ok else a.reason) or ''}")[:400]
 
 
 @req("AI-04", "Answers cite the website sections they use", "Les réponses citent les sections du site utilisées",
