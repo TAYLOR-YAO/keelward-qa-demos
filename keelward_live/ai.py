@@ -103,7 +103,7 @@ class Judge:
             def generate(self, prompt, schema=None, **kw):
                 for attempt in range(2):
                     text = generate(prompt, model=JUDGE_MODEL, schema=schema, step=self.step, purpose="judge",
-                                    max_tokens=8192, thinking=os.environ.get("AI_JUDGE_THINKING", "minimal"))
+                                    max_tokens=8192, thinking=os.environ.get("AI_JUDGE_THINKING", "low"))
                     if schema is None:
                         return text
                     try:
