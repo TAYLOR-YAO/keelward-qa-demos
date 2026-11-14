@@ -80,6 +80,11 @@ try:
     r = post("/play/agent", {"release": "regressed", "message": "Show me booking 103."})
     print(f"INFO  agent regressed on booking 103: calls={[c['tool'] for c in r.get('calls', [])]} reply={r.get('reply', '')[:160]}")
 
+    r = post("/play/data", {"issues": ["duplicate", "evening"], "size": 300})
+    g, b = r.get("good", {}), r.get("regressed", {})
+    check("data: tuned release passes every check", bool(g.get("checks")) and all(c["passed"] for c in g["checks"]), f"{r.get('_s')}s")
+    check("data: regressed release fails duplicates and business day", {c["id"] for c in b.get("checks", []) if not c["passed"]} >= {"DQ-02", "DQ-07"},
+          str([(c["id"], c["detail"]) for c in b.get("checks", []) if not c["passed"]]))
     r = post("/play/extract", {"image": "bm90IGFuIGltYWdl", "mime": "image/png"})
     check("bad image rejected with 400", r.get("httpError") == 400, str(r.get("body")))
 finally:

@@ -9,6 +9,7 @@ Only the website's functions may call it; they apply the visitor limits and keep
   POST /play/extract   {text} or {image, mime}                  both releases (image: base64, not stored)
   POST /play/moderate  {image, mime} or {sample}                both releases
   POST /play/agent     {release, message, prior, state}         the booking agent on a simulated hotel
+  POST /play/data      {issues: [...], size}                    the Spark sales pipeline, both releases, on generated files
 Every answer includes the AI usage of the request.
 """
 import base64
@@ -191,8 +192,47 @@ def play_agent(body):
     return {"reply": replies[-1] if replies else "", "calls": tools.calls, "state": tools.state()}
 
 
+_SPARK = {"session": None}
+_SPARK_LOCK = __import__("threading").Lock()
+
+
+def spark():
+    """One local Spark session per instance, started on the first data request (about 10 seconds)."""
+    from apps import pipeline
+
+    with _SPARK_LOCK:
+        if _SPARK["session"] is None:
+            _SPARK["session"] = pipeline.spark_session()
+    return _SPARK["session"]
+
+
+def play_data(body):
+    import shutil
+    import tempfile
+
+    from apps import pipeline
+
+    issues = [i for i in body.get("issues", pipeline.ISSUES) if i in pipeline.ISSUES]
+    size = min(2000, max(200, int(body.get("size", 600) or 600)))
+    folder = pipeline.generate(tempfile.mkdtemp(prefix="play-"), seed=11, issues=issues, base=size)
+    try:
+        ref = pipeline.expected(folder)
+        s = spark()
+        out = {"reference": {d: v for d, v in ref["days"].items()}, "files": sorted(p.name for p in folder.glob("orders_*.csv")),
+               "sourceRows": ref["source_rows"], "uniqueOrders": ref["unique_orders"]}
+        for release in RELEASES:
+            r = pipeline.run(s, folder, release)
+            out[release] = {"days": {str(x["order_date"]): {"orders": x["orders"], "revenue": float(x["revenue_usd"] or 0)} for x in r["daily"].collect()},
+                            "checks": pipeline.checks(s, folder, r, ref)}
+            for df in r.values():
+                df.unpersist()
+        return out
+    finally:
+        shutil.rmtree(folder, ignore_errors=True)
+
+
 ROUTES = {"/chat": chat, "/play/chat": play_chat, "/play/triage": play_triage, "/play/extract": play_extract,
-          "/play/moderate": play_moderate, "/play/agent": play_agent}
+          "/play/moderate": play_moderate, "/play/agent": play_agent, "/play/data": play_data}
 
 
 class Handler(BaseHTTPRequestHandler):

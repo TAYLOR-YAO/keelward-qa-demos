@@ -29,7 +29,10 @@ FX = {"USD": 1.0, "EUR": 1.0842, "CAD": 0.7375}
 
 
 # ------------------------------------------------------------------ the source data
-def generate(folder, seed=7):
+ISSUES = ("duplicate", "renamed", "new_products", "invalid", "evening", "currencies")
+
+
+def generate(folder, seed=7, issues=ISSUES, base=1800):
     """Writes the store's source files: three daily order files, one delivered twice, the catalog and the rates.
 
     What real sources do, on purpose:
@@ -39,7 +42,10 @@ def generate(folder, seed=7):
       - a few rows have a zero quantity or a negative price (test orders, refunds sent as orders)
       - some orders are placed late in the evening, New York time (already the next day in UTC)
       - orders are paid in USD, EUR or CAD
+    `issues` turns these on or off (the AI playground lets visitors choose); with all of them on, the files are
+    the same as in the nightly tests.
     """
+    issues = set(issues)
     folder = Path(folder)
     folder.mkdir(parents=True, exist_ok=True)
     rnd = random.Random(seed)
@@ -57,25 +63,28 @@ def generate(folder, seed=7):
     for d, day in enumerate(DAYS):
         rows = []
         local_midnight = datetime.fromisoformat(day).replace(tzinfo=timezone(timedelta(hours=-5)))  # EST in March 2027
-        for n in range(1800 + d * 150):
+        for n in range(base + d * base // 12):
             oid += 1
             # Most orders in the day; about 8% between 19:00 and 23:59 New York time (00:00-04:59 UTC the next day).
-            minute = rnd.randint(19 * 60, 23 * 60 + 59) if rnd.random() < 0.08 else rnd.randint(7 * 60, 19 * 60 - 1)
+            evening = rnd.random() < 0.08 and "evening" in issues
+            minute = rnd.randint(19 * 60, 23 * 60 + 59) if evening else rnd.randint(7 * 60, 19 * 60 - 1)
             ts = (local_midnight + timedelta(minutes=minute, seconds=rnd.randint(0, 59))).astimezone(timezone.utc)
-            p = rnd.choice(new_products) if rnd.random() < 0.012 else rnd.choice(products)
-            cur = rnd.choices(["USD", "EUR", "CAD"], [0.78, 0.14, 0.08])[0]
+            p = rnd.choice(new_products) if rnd.random() < 0.012 and "new_products" in issues else rnd.choice(products)
+            cur = rnd.choices(["USD", "EUR", "CAD"], [0.78, 0.14, 0.08])[0] if "currencies" in issues else "USD"
             price = round(p["list_price"] / FX[cur], 2)
             qty = rnd.choices([1, 2, 3, 4], [0.7, 0.2, 0.07, 0.03])[0]
             rows.append({"order_id": f"O{oid}", "order_ts": ts.strftime("%Y-%m-%dT%H:%M:%SZ"), "customer_id": f"C{rnd.randint(1000, 4999)}",
                          "product_id": p["product_id"], "quantity": qty, "unit_price": price, "currency": cur})
         for bad in rnd.sample(range(len(rows)), 3):  # test orders and refunds sent as orders
-            if rnd.random() < 0.5:
+            if "invalid" not in issues:
+                rnd.random()
+            elif rnd.random() < 0.5:
                 rows[bad]["quantity"] = 0
             else:
                 rows[bad]["unit_price"] = -abs(rows[bad]["unit_price"])
-        renamed = day >= "2027-03-03"
+        renamed = day >= "2027-03-03" and "renamed" in issues
         cols = ["order_id", "order_ts", "customer_id", "product_id", "quantity", "price" if renamed else "unit_price", "currency"]
-        names = [f"orders_{day}.csv"] + ([f"orders_{day}_retry.csv"] if day == "2027-03-02" else [])
+        names = [f"orders_{day}.csv"] + ([f"orders_{day}_retry.csv"] if day == "2027-03-02" and "duplicate" in issues else [])
         for name in names:
             with open(folder / name, "w", newline="", encoding="utf-8") as f:
                 w = csv.writer(f)
@@ -228,3 +237,28 @@ def chart(expected_days, pipeline_days, title):
     fig.savefig(buf, format="png")
     plt.close(fig)
     return buf.getvalue()
+
+
+def checks(spark, folder, out, ref):
+    """The main data checks of the nightly suite, as a short list (used by the AI playground)."""
+    from pyspark.sql import functions as F
+
+    b, s, q = out["bronze"], out["silver"], out["quarantine"]
+    empty = b.filter(F.col("unit_price").isNull()).count()
+    dupes = s.groupBy("order_id").count().filter("count > 1").count()
+    diff = s.count() + q.count() - ref["unique_orders"]
+    products = spark.read.option("multiLine", True).json(str(Path(folder) / "products.json")).select("product_id")
+    unknown = b.join(products, "product_id", "left_anti").filter("quantity >= 1 and unit_price > 0").select("order_id").distinct()
+    n_unknown = unknown.count()
+    kept = s.join(unknown, "order_id").select("order_id").distinct().count()
+    late = s.withColumn("local", F.from_utc_timestamp("ts", STORE_TZ)).filter(F.col("order_date") != F.to_date("local")).count()
+    got = {str(r["order_date"]): float(r["revenue_usd"] or 0) for r in out["daily"].collect()}
+    wrong_days = [d for d in sorted(set(got) | set(ref["days"])) if abs(got.get(d, 0) - ref["days"].get(d, {}).get("revenue", 0)) > 1]
+    return [  # n: how many rows or days are wrong (0 = passed); the website words the result
+        {"id": "DQ-01", "name": "Source contract", "passed": empty == 0, "n": empty, "detail": f"{empty:,} rows with an empty price" if empty else "every column filled"},
+        {"id": "DQ-02", "name": "No duplicate orders", "passed": dupes == 0, "n": dupes, "detail": f"{dupes:,} orders counted twice" if dupes else "each order once"},
+        {"id": "DQ-03", "name": "Rows reconcile", "passed": diff == 0, "n": diff, "detail": f"{diff:+,} rows vs the source" if diff else "in = out + quarantine"},
+        {"id": "DQ-05", "name": "New products kept", "passed": kept == n_unknown, "n": n_unknown - kept, "detail": f"{n_unknown - kept:,} orders dropped" if kept < n_unknown else f"{n_unknown:,} kept and flagged"},
+        {"id": "DQ-07", "name": "Store business day", "passed": late == 0, "n": late, "detail": f"{late:,} orders on the wrong day" if late else "New York time"},
+        {"id": "DQ-09", "name": "Revenue matches the source", "passed": not wrong_days, "n": len(wrong_days), "detail": f"{len(wrong_days)} day(s) wrong" if wrong_days else "every day within $1"},
+    ]
